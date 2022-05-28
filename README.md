@@ -3,4 +3,4 @@ This repository contains the project for CSE 303 Summer 2022
 
 ## What is this about
 
-This project is about Air Quality
+This project is about Air Quality index....
