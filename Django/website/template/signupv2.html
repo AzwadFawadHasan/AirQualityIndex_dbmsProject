@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp Screen</title>
+    <link rel="stylesheet" href = "C:\Users\hpflyernew\Documents\Django\website\template\style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class ="center">
+        <h1>Sign Up</h1>
+        <form method = "post">
+            <div class ="txt_field">
+                <input type="text" required>
+                <span></span>
+                <label for='first_name'>First Name</label> 
+            </div>
+            <div class ="txt_field">
+                <input type="text" required>
+                <span></span>
+                <label for='last_name'>Last Name</label> 
+            </div>
+            <div >
+                Sex:
+                <label for='sex' > </label>
+		        <input type='radio' name='sex' value='male' required>
+		        <label >Male</label>
+		        <input type='radio' name='sex' value='female' required>
+		        <label >Female</label><br>
+                <span></span>
+               
+            </div>
+            <div class ="txt_field">
+                <input type="text" required>
+                <span></span>
+                <label for='email'>Enter Email</label> 
+            </div>
+            <div class ="txt_field">
+                <input type="password" required>
+                <span></span>
+                <label>Password</label> 
+            </div>
+            <div class ="txt_field">
+                <input type="submit"  value = "Signup">
+                <div class="signup_link">
+                    Already a user? 
+                    <a href="C:\Users\hpflyernew\Documents\Django\website\template\loginPagev2.html">
+                        
+                        Login
+                    </a>
+                </div> 
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>
