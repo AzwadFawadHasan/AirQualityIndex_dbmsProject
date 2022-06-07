@@ -13,4 +13,5 @@ This project is about Air Quality index....
   src="https://i.ibb.co/jTy4pf2/login-Screen.png"
   alt="Alt text"
   title="Optional title"
-  style="display: inline-block; margin: 0 auto; max-width: 500px">
+  style="display: inline-block; max-width: auto;
+  height: auto;">
