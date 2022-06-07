@@ -7,4 +7,4 @@ This project is about Air Quality index....
 
 
 ### Login screen
-![My Remote Image](https://ibb.co/jTy4pf2)
+<a href="https://ibb.co/jTy4pf2"><img src="https://i.ibb.co/jTy4pf2/login-Screen.png" alt="login-Screen" border="0"></a>
