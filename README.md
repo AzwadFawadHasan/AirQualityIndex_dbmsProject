@@ -1,17 +1,11 @@
-# CSE303_Database_Project_Group_4
-This repository contains the project for CSE 303 Summer 2022
 
-## What is this about
+## Screenshots
 
-This project is about Air Quality index....
+### Login Screen
 
+[![login-Screen.png](https://i.postimg.cc/50V1yMhQ/login-Screen.png)](https://postimg.cc/VSD2Z2Lz)
 
-### Login screen
-<a href="https://ibb.co/jTy4pf2"><img src="https://i.ibb.co/jTy4pf2/login-Screen.png" alt="login-Screen" style ></a>
+### Signup Screen
 
-<img
-  src="https://i.ibb.co/jTy4pf2/login-Screen.png"
-  alt="Alt text"
-  title="Optional title"
-  style="display: inline-block; max-width: auto;
-  height: auto;">
+[![signup-Screen.png](https://i.postimg.cc/nrN3VnW6/signup-Screen.png)](https://postimg.cc/gLqVNbmD)
+
