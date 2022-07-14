@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In page</title>
+</head>
+<body>
+    <h1>welcom to the sign in page</h1>
+
+    <h3>
+        Log in 
+    </h3>
+    <form action="/signin" method = "POST">
+    {% csrf_token %}
+
+        <label for="">Username</label>
+        <input type="text" id ="username" name="username" placeholder="enter a user name (only letters and Numbers are allowed" required ><br>
+
+        <label for="">userType</label><br>
+
+        <input type="radio" id ="generalUser" name="userType" placeholder="Enter the type of User" checked Required >
+        <label for="generalUser">generalUser</label><br>
+        <input type="radio" id ="admin" name="userType" placeholder="Enter the type of User">
+        <label for="admin">admin</label><br>
+
+
+
+        <label for="">password</label>
+        <input type="password" id ="pass1" name="pass1" placeholder="Enter your passwrod " Required><br>
+
+
+    
+        <button type = "submit">
+            Log sign In
+        </button>
+        
+    </form>
+    
+</body>
+</html>
