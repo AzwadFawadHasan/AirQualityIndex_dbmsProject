@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <div>
+        <h1>
+            Hello {{request.user|title}}
+        </h1>
+        <h3 style="margin:0">
+            you have <i>
+                {{count}}
+            </i>
+            incomplete items
+            {{ count|pluralize:"s" }}
+            
+        </h3>
+    </div>
+    {% if request.user.is_authenticated %}
+    <div>
+        <h1>hi
+            {{request.user}}
+        </h1>
+        <br>
+        <a href="{% url 'logout' %}"> logout</a>
+        <hr>
+    {% else %}
+        <a href="">login </a>
+    {% endif %}
+</div>
+
+
+
+
+<a href="{% url 'task-create' %}"> Add task</a>
+
+<form method = "GET">
+    <input type = 'text' name = 'search-area' value = "{{search_input}}">
+    <input type = "submit" value = 'Search'>
+</form>
+
+
+
+
+<table>
+    <tr>
+        <th>
+            Item
+        </th>
+    </tr>
+
+    {% for task in tasks %}
+    <tr>
+        <td>
+            {{task.title}}
+        </td>
+        <td>
+           <a href="{% url 'task' task.id %}">View</a>
+           <a href="{% url 'task-update' task.id %}">Edit</a>
+           <a href="{% url 'task-delete' task.id %}">Delete</a>
+        </td>
+        
+
+    </tr>
+    {% empty %}
+    <h4>no items in the list </h4>
+
+
+    {% endfor %}
+</table>
+</div>  
+{% endblock content %}
+
+
