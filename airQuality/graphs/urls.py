@@ -29,4 +29,6 @@ urlpatterns = [
     
     path('multipleBoxPlot/', views.multipleBoxPlot, name='multipleBoxPlot'), 
     path('scatterPlotWithLineGraph/', views.scatterPlotWithLineGraph, name='scatterPlotWithLineGraph'),
+    
+    path('multipleLineCharts/', views.multipleLineCharts, name='multipleLineCharts'),
 ]

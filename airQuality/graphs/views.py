@@ -131,6 +131,11 @@ def scatterPlotWithLineGraph(request):
     #python -m pip install statsmodels 
     return render(request, "graphs/multipleBoxPlot.html")
 
+def multipleLineCharts(request):
+    df = px.data.gapminder().query("continent == 'Oceania'")
+    fig = px.line(df, x='year', y='lifeExp', color='country', markers=True)
+    fig.show()
+    return render(request, "graphs/multipleLineCharts.html")
 
 
 
