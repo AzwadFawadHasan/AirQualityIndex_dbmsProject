@@ -34,4 +34,6 @@ urlpatterns = [
     path('scatterPlotWithLineGraph/', include('graphs.urls')),
     
     path('multipleLineCharts/', include('graphs.urls')),
+    
+    path('lineChartsWithDots/', include('graphs.urls')),
 ]

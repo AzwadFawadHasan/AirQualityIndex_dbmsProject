@@ -137,6 +137,12 @@ def multipleLineCharts(request):
     fig.show()
     return render(request, "graphs/multipleLineCharts.html")
 
+def lineChartsWithDots(request):
+    df = px.data.gapminder().query("country in ['Canada', 'Botswana']")
+    fig = px.line(df, x="lifeExp", y="gdpPercap", color="country", text="year")
+    fig.update_traces(textposition="bottom right")
+    fig.show()
+    return render(request, "graphs/lineChartsWithDots.html")
 
 
 
