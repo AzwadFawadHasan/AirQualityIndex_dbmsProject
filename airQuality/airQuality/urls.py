@@ -28,5 +28,7 @@ urlpatterns = [
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
     #path('lineCharts/', lineCharts.as_view(), name="lineCharts"),
     #path('graphs/', include('lineCharts')),
-    path('lineCharts/', include('graphs.urls'))
+    path('lineCharts/', include('graphs.urls')),
+    
+    path('multipleBoxPlot/', include('graphs.urls')),
 ]

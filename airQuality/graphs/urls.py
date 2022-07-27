@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include 
 from signup.views import signaction
 from login.views import loginaction
-from graphs.views import lineCharts
+#from graphs.views import lineCharts
 from . import views
 
 urlpatterns = [
@@ -26,4 +26,6 @@ urlpatterns = [
     #path('login/',loginaction),
     #path('django_plotly_dash/', include('django_plotly_dash.urls')),
     path('lineCharts/', views.lineCharts, name='lineCharts'),
+    
+    path('multipleBoxPlot/', views.multipleBoxPlot, name='multipleBoxPlot'),
 ]
