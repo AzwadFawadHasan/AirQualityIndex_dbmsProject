@@ -18,15 +18,12 @@ from django.urls import path, include
 from signup.views import signaction
 from login.views import loginaction
 from graphs.views import lineCharts
-
-
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('signup/',signaction),
-    path('login/',loginaction),
-    path('django_plotly_dash/', include('django_plotly_dash.urls')),
-    #path('lineCharts/', lineCharts.as_view(), name="lineCharts"),
-    #path('graphs/', include('lineCharts')),
-    path('lineCharts/', include('graphs.urls'))
+    #path('admin/', admin.site.urls),
+    #path('signup/',signaction),
+    #path('login/',loginaction),
+    #path('django_plotly_dash/', include('django_plotly_dash.urls')),
+    path('lineCharts/', views.lineCharts, name='lineCharts'),
 ]
