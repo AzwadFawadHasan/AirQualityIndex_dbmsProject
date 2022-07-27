@@ -118,6 +118,21 @@ def multipleBoxPlot(request):
     fig.show()
     return render(request, "graphs/multipleBoxPlot.html")
 
+def scatterPlotWithLineGraph(request):
+    df = px.data.tips()
+    fig = px.scatter(df, x="total_bill", y="tip", facet_col="smoker", color="sex", trendline="ols")
+    fig.show()
+
+    results = px.get_trendline_results(fig)
+    print(results)
+    results.query("sex == 'Male' and smoker == 'Yes'").px_fit_results.iloc[0].summary()
+    #this uses statmodels 
+    # to install
+    #python -m pip install statsmodels 
+    return render(request, "graphs/multipleBoxPlot.html")
+
+
+
 
 
 def index2(request):
