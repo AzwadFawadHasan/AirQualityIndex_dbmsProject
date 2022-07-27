@@ -33,4 +33,6 @@ urlpatterns = [
     path('multipleLineCharts/', views.multipleLineCharts, name='multipleLineCharts'),
     
     path('lineChartsWithDots/', views.lineChartsWithDots, name='lineChartsWithDots'),
+    
+    path('barChartWithLines/', views.barChartWithLines, name='barChartWithLines'),
 ]

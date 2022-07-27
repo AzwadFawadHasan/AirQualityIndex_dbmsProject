@@ -36,4 +36,6 @@ urlpatterns = [
     path('multipleLineCharts/', include('graphs.urls')),
     
     path('lineChartsWithDots/', include('graphs.urls')),
+    
+    path('barChartWithLines/', include('graphs.urls')),
 ]

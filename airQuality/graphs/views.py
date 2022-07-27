@@ -168,7 +168,7 @@ def index2(request):
     return render(request, "base/index2.html")
 
 
-def index3(request):
+def barChartWithLines(request):
     #bar chart graph with lines
     fig = go.Figure()
 
@@ -185,7 +185,7 @@ def index3(request):
     ))
 
     fig.show()
-    return render(request, "base/index3.html")
+    return render(request, "graphs/barChartWithLines.html")
 
 
 
