@@ -19,7 +19,10 @@ from signup.views import signaction
 from login.views import loginaction
 #from graphs.views import lineCharts
 from . import views
-
+from django.conf.urls.static import static
+from django.conf import settings
+#from graphs.views import csvUpload
+#from graphs.models import FilesUpload
 urlpatterns = [
     #path('admin/', admin.site.urls),
     #path('signup/',signaction),
@@ -35,4 +38,11 @@ urlpatterns = [
     path('lineChartsWithDots/', views.lineChartsWithDots, name='lineChartsWithDots'),
     
     path('barChartWithLines/', views.barChartWithLines, name='barChartWithLines'),
+
+    #path('country/', views.country, name='country'),
+    path('country2/', views.country2, name='country2'),
+
+    #path('csvUpload/', csvUpload, name='csvUpload'),
+    #path('csvUpload/', csvUpload, name='csvUpload')
+    
 ]

@@ -14,17 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include 
+from django.urls import path, include
+import csvs 
 from signup.views import signaction
 from login.views import loginaction
 from graphs.views import lineCharts
-
+from django.conf.urls.static import static
+from django.conf import settings
+from csvs.views import upload
+from csvs.views import upload
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('signup/',signaction),
-    path('login/',loginaction),
+    path('',loginaction),
+    path('login',loginaction),
+    path('upload/', include('csvs.urls')),
+    
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
     #path('lineCharts/', lineCharts.as_view(), name="lineCharts"),
     #path('graphs/', include('lineCharts')),
@@ -38,4 +45,18 @@ urlpatterns = [
     path('lineChartsWithDots/', include('graphs.urls')),
     
     path('barChartWithLines/', include('graphs.urls')),
+
+    #path('country/', include('graphs.urls')),
+    path('country2/', include('graphs.urls')),
+    #path('csvs/', include('csvs.urls', namespace='csvs')),
+    #path('csvUpload/', include('graphs.urls')),
+    
+    
+   # path('upload/', include('csvs.upload')),
+    
+
+
+    
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root =settings.MEDIA_ROOT)

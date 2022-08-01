@@ -1,3 +1,5 @@
+from pydoc import doc
+from xml.dom.minidom import Document
 from django.shortcuts import render
 from asyncio import tasks
 from django.shortcuts import render
@@ -25,6 +27,8 @@ from plotly.offline import plot
 from plotly.graph_objs import Scatter
 import plotly.graph_objects as go
 import plotly.express as px
+import geojson
+import urllib
 
 import plotly.figure_factory as ff
 import numpy as np
@@ -33,6 +37,32 @@ import scipy
 
 import plotly.graph_objects as go
 import numpy as np
+
+from urllib.request import urlopen
+import json
+import plotly.express as px
+import pandas as pd
+
+from geojsonio import display
+from json import load
+
+import plotly.express as px
+import plotly.io as pio
+
+import mysql.connector
+import csv
+import csv, io
+from django.contrib import messages
+from urllib3 import HTTPResponse
+
+import csv, io;
+from django.shortcuts import render, HttpResponse
+from django.contrib import messages
+from django.contrib.auth.decorators import permission_required
+
+
+from .models import FilesUpload
+#pio.renderers.default = 'browser'
 
 
 # Create your views here.
@@ -54,6 +84,41 @@ import numpy as np
 #scatterplots, and boxplots, e.g.,
 
 def lineCharts(request):
+    mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="root",
+    database="air"
+    )
+
+    mycursor = mydb.cursor()
+
+    #mycursor.execute("CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))")
+    csv_data = csv.reader(open('graphs/csvForLineGraph.csv'))
+    sqlFormula = "INSERT INTO lineCharts(date,avgPM) VALUES (%s, %s)"
+    
+
+    for row in csv_data:
+        mycursor.execute(sqlFormula, 
+            row)
+
+    #close the connection to the database.
+    mydb.commit()
+    #mycursor.close()
+    sqlFormulaFetch ="SELECT date, avgPM from lineCharts"
+    mycursor.execute(sqlFormulaFetch)
+    myAllData = mycursor.fetchall();
+    
+    allDateData = [];
+    allAvgPmData = [];
+    
+    for date, avgPm in myAllData:
+        
+          
+        allDateData.append(date)
+        allAvgPmData.append(avgPm)
+        
+
 
     month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
              'August', 'September', 'October', 'November', 'December']
@@ -66,25 +131,25 @@ def lineCharts(request):
 
     fig = go.Figure()
     # Create and style traces
-    fig.add_trace(go.Scatter(x=month, y=high_2014, name='High 2014',
+    fig.add_trace(go.Scatter(x=allDateData, y=allAvgPmData, name='csvForLineGraph',
                              line=dict(color='firebrick', width=4)))
-    fig.add_trace(go.Scatter(x=month, y=low_2014, name = 'Low 2014',
-                             line=dict(color='royalblue', width=4)))
-    fig.add_trace(go.Scatter(x=month, y=high_2007, name='High 2007',
-                             line=dict(color='firebrick', width=4,
-                                  dash='dash') # dash options include 'dash', 'dot', and 'dashdot'
-    ))
-    fig.add_trace(go.Scatter(x=month, y=low_2007, name='Low 2007',
-                             line = dict(color='royalblue', width=4, dash='dash')))
-    fig.add_trace(go.Scatter(x=month, y=high_2000, name='High 2000',
-                             line = dict(color='firebrick', width=4, dash='dot')))
-    fig.add_trace(go.Scatter(x=month, y=low_2000, name='Low 2000',
-                             line=dict(color='royalblue', width=4, dash='dot')))
+    #fig.add_trace(go.Scatter(x=month, y=low_2014, name = 'Low 2014',
+    #                         line=dict(color='royalblue', width=4)))
+    #fig.add_trace(go.Scatter(x=month, y=high_2007, name='High 2007',
+    #                         line=dict(color='firebrick', width=4,
+    #                              dash='dash') # dash options include 'dash', 'dot', and 'dashdot'
+    #))
+    #fig.add_trace(go.Scatter(x=month, y=low_2007, name='Low 2007',
+    #                         line = dict(color='royalblue', width=4, dash='dash')))
+    #fig.add_trace(go.Scatter(x=month, y=high_2000, name='High 2000',
+    #                         line = dict(color='firebrick', width=4, dash='dot')))
+    #fig.add_trace(go.Scatter(x=month, y=low_2000, name='Low 2000',
+    #                         line=dict(color='royalblue', width=4, dash='dot')))
 
     # Edit the layout
-    fig.update_layout(title='Average High and Low Temperatures in New York',
+    fig.update_layout(title='month vs avg PM 2.5',
                        xaxis_title='Month',
-                       yaxis_title='Temperature (degrees F)')
+                       yaxis_title='avg Pm 2.5')
 
 
     fig.show()
@@ -243,3 +308,113 @@ def dataDistribution(request):
 
 
 
+
+def country(request):
+    #with urlopen('https://drive.google.com/file/d/18AwrNB1iest498bqN8Kf3PCKaC25JKl6/view?usp=sharing') as response:
+    #    counties = json.load(response)
+    #import pandas as pd
+    #data = pd.read_json('graphs/bangladesh.geojson')
+    #print(data)
+    #https://drive.google.com/file/d/18AwrNB1iest498bqN8Kf3PCKaC25JKl6/view?usp=sharing
+    #
+    #df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
+    #                   dtype={"fips": str})
+    #
+    #
+    #
+    #fig = px.choropleth_mapbox(df, geojson=counties, locations='fips', color='unemp',
+    #                           color_continuous_scale="Viridis",
+    #                           range_color=(0, 12),
+    #                           mapbox_style="carto-positron",
+    #                           zoom=3, center = {"lat": 37.0902, "lon": -95.7129},
+    #                           opacity=0.5,
+    #                           labels={'unemp':'unemployment rate'}
+    #                          )
+    #fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    #fig.show()
+
+    bangladeshDistricts = json.load.open('graphs/bangladesh.geojson', 'r')
+    bangladeshDistricts['features'][0]
+
+    #with urlopen('https://github.com/realfahimreza/bangladesh-geojson/blob/master/bangladesh.geojson') as response:
+    #    counties = json.load(response)
+#
+    #import pandas as pd
+    #df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
+    #               dtype={"fips": str})
+#
+   #
+#
+    #fig = px.choropleth_mapbox(df, geojson=counties, locations='fips', color='unemp',
+    #                           range_color=(0, 12),
+    #                           color_continuous_scale="Viridis",
+    #                           mapbox_style="carto-positron",
+    #                           zoom=3, center = {"lat": 37.0902, "lon": -95.7129},
+    #                           opacity=0.5,
+    #                           labels={'unemp':'unemployment rate'}
+    #                      )
+    #fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    #fig.show()
+    #return render(request, "graphs/country.html")
+
+
+
+def country2(request):
+    
+    bd_districts=load(open('graphs/bangladesh_geojson_adm2_64_districts_zillas.json','r'))
+    df=pd.read_csv("graphs/Districts_of_Bangladesh.csv")
+    df.District = df.District.apply(lambda x: x.replace(" District",""))
+    district_id_map = {}
+    for feature in bd_districts["features"]:
+        feature["id"] = feature["id"]
+        district_id_map[feature["properties"]["ADM2_EN"]] = feature["id"]
+    df['id'] = df.District.apply(lambda x: district_id_map[x])
+    df = df.rename(columns={
+    'Population (thousands)[28]' : 'Population (thousands)',
+    'Area (km2)[28]' : 'Area (km2)' })    
+
+    fig = px.choropleth(
+    df,
+    locations='id',
+    geojson=bd_districts,
+    color='Population (thousands)',
+    title='Bangladesh Population',
+    )
+    fig.update_geos(fitbounds="locations", visible=True)
+    fig.show()
+
+    
+
+    return render(request, "graphs/country2.html")
+    
+import csv
+
+
+###
+#def csvUpload(request):
+#    if request.method =="POST":
+#    
+#    #if request.method =="GET":
+#    #    return render(request, "graphs/csvUpload.html")
+#    ##if request.method == "POST":
+#    #    fileUploaded = request.FILES["file"]
+#    #    document= FilesUpload.objects.create(file = fileUploaded)
+#    #    document.save()
+#    #    return HTTPResponse("your file was uploaded")
+#    #return render(request, "graphs/csvUpload.html")
+# 
+#        csv_file = request.FILES['file'];
+#   
+# 
+#        data_set = csv_file.read().decode('UTF-8')    
+#        io_string = io.StringIO(data_set)
+#        next(io_string)
+#        for column in csv.reader(io_string, delimiter=',', quotechar='|'):
+#            _, created = FilesUpload.objects.update_or_create(date  = column[0],
+#            avgPM = column[1])
+#    context = {}
+#    return render (request,"graphs/csvUpload.html", context )    
+#        
+#        
+#
+#
