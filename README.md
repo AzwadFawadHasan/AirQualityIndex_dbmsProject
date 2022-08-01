@@ -14,5 +14,4 @@ This project is about Air Quality index....
 
 ### Signup Screen
 
-[![signup-Screen.png](https://i.postimg.cc/nrN3VnW6/signup-Screen.png)](https://postimg.cc/gLqVNbmD)
 

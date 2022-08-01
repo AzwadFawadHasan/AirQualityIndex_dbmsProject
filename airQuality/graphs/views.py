@@ -111,12 +111,20 @@ def lineCharts(request):
     
     allDateData = [];
     allAvgPmData = [];
+    allDateData2 = [];
+    allAvgPmData2 = [];
+    countFlag = 0
     
     for date, avgPm in myAllData:
+        if countFlag==0:
+            allDateData2.append(date)
+            allAvgPmData2.append(avgPm)
+            countFlag+=1;
+        elif countFlag>=1:
         
-          
-        allDateData.append(date)
-        allAvgPmData.append(avgPm)
+        
+            allDateData.append(date)
+            allAvgPmData.append(avgPm)
         
 
 
