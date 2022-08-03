@@ -378,10 +378,10 @@ def lineCharts(request):
     #                  yaxis_title='avg Pm 2.5')
     #fig.show()#media\csvForLineGraph.csv
     #fig = go.Figure();
-    df = pd.concat([pd.DataFrame({"day":range(50),"avg_spending":np.random.randint(1,17,50)}).assign(type=type) for type in ["one","two"]])
-
-    fig = px.line(df, x="day", y="avg_spending", color="type")
-    fig.update_layout(yaxis={"dtick":1,"range":[0,17]},margin={"t":0,"b":0},height=500)
+    #df = pd.concat([pd.DataFrame({"day":range(50),"avg_spending":np.random.randint(1,17,50)}).assign(type=type) for type in ["one","two"]])
+#
+    #fig = px.line(df, x="day", y="avg_spending", color="type")
+    #fig.update_layout(yaxis={"dtick":1,"range":[0,17]},margin={"t":0,"b":0},height=500)
     #fig.add_trace(
     #    go.Scatter(x=allDateDataDhaka, y=allAvgPmDataDhaka, name='Dhaka')
     #)
@@ -394,11 +394,38 @@ def lineCharts(request):
 
     #df = pd.read_sql_table("finaltraindata", engine, columns=['time', 'PM25', 'division'])
     query ='''
-    SELECT time, PM25 from finalTrainData   
+    SELECT time, PM25 from finalTrainData where division = 'Dhaka'  
     
     '''
     queryRangpur ='''
     SELECT time, PM25 from finalTrainData where division = 'Rangpur'
+    
+    '''
+    queryKhulna  ='''
+    SELECT time, PM25 from finalTrainData where division = 'Khulna'
+    
+    '''
+    querySylhet  ='''
+    SELECT time, PM25 from finalTrainData where division = 'Sylhet'
+    
+    '''
+
+    queryRajshahi ='''
+    SELECT time, PM25 from finalTrainData where division = 'Rajshahi'
+    
+    '''
+    queryChittagong ='''
+    SELECT time, PM25 from finalTrainData where division = 'Chittagong'
+    
+    '''
+
+    queryMymensingh ='''
+    SELECT time, PM25 from finalTrainData where division = 'Mymensingh'
+    
+    '''
+
+    queryBarisal ='''
+    SELECT time, PM25 from finalTrainData where division = 'Barisal'
     
     '''
     
@@ -406,18 +433,31 @@ def lineCharts(request):
    
     
     df2 = pd.read_sql_query(queryRangpur, engine)
+    df3 = pd.read_sql_query(queryKhulna, engine)
+    df4 = pd.read_sql_query(querySylhet, engine)
+    df5 = pd.read_sql_query(queryRajshahi, engine)
+    df6 = pd.read_sql_query(queryChittagong, engine)
+    df7 = pd.read_sql_query(queryMymensingh, engine)
+    df8 = pd.read_sql_query(queryBarisal, engine)
     #dhaka_df = pd.pivot_table(df, values=['time','PM25'], columns='division')
     
-    display(df)
+    #display(df)
     
-    fig = px.line(df, x="time", y="PM25", color="division")
+    #fig = px.line(df, x="time", y="PM25")
 
-    #fig = go.Figure()
-    #fig.add_trace(go.Scatter(x="time", y="PM25", color="division", mode="lines"))
-    ##fig.add_trace(go.Scatter(x=df2["time"], y=df2["PM25"], name="Rangpur", mode="lines"))
-    #fig.update_layout(
-    #title="avgpm25 vs time", xaxis_title="Date", yaxis_title="AVG PM 25"
-    #)
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df["time"], y=df["PM25"], name="Dhaka", mode="lines"))
+    fig.add_trace(go.Scatter(x=df["time"], y=df2["PM25"], name="Rangpur", mode="lines",))
+    fig.add_trace(go.Scatter(x=df["time"], y=df3["PM25"], name="Khulna", mode="lines",))
+    fig.add_trace(go.Scatter(x=df["time"], y=df4["PM25"], name="Sylhet", mode="lines",))
+    fig.add_trace(go.Scatter(x=df["time"], y=df5["PM25"], name="Rajshahi", mode="lines",))
+    fig.add_trace(go.Scatter(x=df["time"], y=df6["PM25"], name="Chittagong", mode="lines",))
+    fig.add_trace(go.Scatter(x=df["time"], y=df7["PM25"], name="Mymensingh", mode="lines",))
+    fig.add_trace(go.Scatter(x=df["time"], y=df8["PM25"], name="Barisal", mode="lines",))
+
+    fig.update_layout(
+    title="avgpm25 vs time", xaxis_title="Time", yaxis_title="AVG PM 25"
+    )
     
     #traces = [go.Scatter(
     #    x= dhaka_df.columns,
@@ -426,7 +466,8 @@ def lineCharts(request):
     #    name = rowname
 #
     #)for rowname in dhaka_df.index]
-    #layout=go.layout(title='avgpm vs time')
+    fig.update_yaxes(autorange=True)
+    fig.update_layout(autotypenumbers='convert types')
 #
     #figure = go.Figure(data=traces, layout=layout)
     fig.show()
