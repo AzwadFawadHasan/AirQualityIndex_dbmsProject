@@ -41,7 +41,8 @@ def upload(request):
 
 
 def readfile(filename):
-    my_file = pd.read_csv(filename, sep='[:;,_]', engine='python')
+    my_file = pd.read_csv(filename, sep=',', engine='python')
+    #my_file = pd.read_csv(filename, sep='[:;,_|#]', engine='python')
     data = pd.DataFrame(data=my_file, index=None)
     print(data);
 
