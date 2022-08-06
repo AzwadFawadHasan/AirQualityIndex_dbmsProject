@@ -13,7 +13,7 @@ This project is about Air Quality index....
 [![login-Screen.png](https://i.postimg.cc/50V1yMhQ/login-Screen.png)](https://postimg.cc/VSD2Z2Lz)
 ### Login Screen V2
     
-    [![login-Screen-New.png](https://i.postimg.cc/J7ZBHbyX/login-Screen-New.png)](https://postimg.cc/SjQKwYfQ)
+[![login-Screen-New.png](https://i.postimg.cc/J7ZBHbyX/login-Screen-New.png)](https://postimg.cc/SjQKwYfQ)
 ### Signup Screen
 
 
