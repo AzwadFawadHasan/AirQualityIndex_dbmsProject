@@ -793,27 +793,27 @@ def lineChartsWithDots(request):
   
     avgpm25for2017Barisal =pd.read_sql_query(
         """
-        select AVG(PM25) from finaltraindata where time Like "%2017" AND division= "Barisal"; 
+        select AVG(PM25) from finaltraindata where time Like "%2017" AND division= "Barishal"; 
         """,conn
     )
     avgpm25for2018Barisal =pd.read_sql_query(
         """
-        select AVG(PM25) from finaltraindata where time Like "%2018" AND division= "Barisal"; 
+        select AVG(PM25) from finaltraindata where time Like "%2018" AND division= "Barishal"; 
         """,conn
     )
     avgpm25for2019Barisal =pd.read_sql_query(
         """
-        select AVG(PM25) from finaltraindata where time Like "%2019" AND division= "Barisal"; 
+        select AVG(PM25) from finaltraindata where time Like "%2019" AND division= "Barishal"; 
         """,conn
     )
     avgpm25for2020Barisal =pd.read_sql_query(
         """
-        select AVG(PM25) from finaltraindata where time Like "%2020" AND division= "Barisal"; 
+        select AVG(PM25) from finaltraindata where time Like "%2020" AND division= "Barishal"; 
         """,conn
     )
     avgpm25for2021Barisal =pd.read_sql_query(
         """
-        select AVG(PM25) from finaltraindata where time Like "%2021" AND division= "Barisal"; 
+        select AVG(PM25) from finaltraindata where time Like "%2021" AND division= "Barishal"; 
         """,conn
     )
     BarisalAvgPM25For2018Value=avgpm25for2018Barisal['AVG(PM25)'][0]
