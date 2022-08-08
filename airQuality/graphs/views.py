@@ -1,11 +1,13 @@
 
 
+from wsgiref.handlers import format_date_time
 from django.shortcuts import render
 
 from django.shortcuts import render
 
 
-
+import plotly.express as px
+import pandas as pd
 from django.shortcuts import render, redirect
 
 
@@ -75,8 +77,7 @@ from pandas import DataFrame
 #4.
 #A comparison between multiple data sources should be shown using line charts,
 #scatterplots, and boxplots, e.g.,
-import plotly.express as px
-import pandas as pd
+
 
 def lineCharts(request):
 
@@ -139,12 +140,12 @@ def lineCharts(request):
     sqlFormulaFetch2 ="SELECT time, PM25 from finalTrainData"
     Dhakasql = "SELECT time, PM25 from finalTrainData where division= 'Dhaka' ";
     Rangpursql = "SELECT time, PM25 from finalTrainData where division= 'Rangpur'  ";
-    #Khulnasql = "SELECT time, PM25 from finalTrainData where division= 'Khulna' ";
-    #Syhletsql = "SELECT time, PM25 from finalTrainData where division= 'Syhlet' ";
-    #Rajshahisql = "SELECT time, PM25 from finalTrainData where division= 'Rajshahi' ";
-    #Chittagongsql = "SELECT time, PM25 from finalTrainData where division= 'Chittagong' ";
-    #Mymensinghsql = "SELECT time, PM25 from finalTrainData where division= 'Mymensingh' ";
-    #Barisalsql = "SELECT time, PM25 from finalTrainData where division= 'Barisal' ";
+    #Khulna sql = "SELECT time, PM25 from finalTrainData where division= 'Khulna' ";
+    #Sylhet sql = "SELECT time, PM25 from finalTrainData where division= 'Syhlet' ";
+    #Rajshahi sql = "SELECT time, PM25 from finalTrainData where division= 'Rajshahi' ";
+    #Chittagong  sql = "SELECT time, PM25 from finalTrainData where division= 'Chittagong' ";
+    #Mymensingh sql = "SELECT time, PM25 from finalTrainData where division= 'Mymensingh' ";
+    #Barisal sql = "SELECT time, PM25 from finalTrainData where division= 'Barisal' ";
     #
     
 
@@ -440,6 +441,7 @@ def lineCharts(request):
     df7 = pd.read_sql_query(queryMymensingh, engine)
     df8 = pd.read_sql_query(queryBarisal, engine)
     #dhaka_df = pd.pivot_table(df, values=['time','PM25'], columns='division')
+
     
     #display(df)
     
@@ -480,6 +482,517 @@ def lineCharts(request):
 
 
 
+def scatterPlotWithLineGraph(request):
+    mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="root",
+    database="air"
+    )
+#select daily, location from epadaily where daily between '1/1/2017' and '12/31/2017'
+
+#inserting data into purpleair table in the database
+    #mycursor = mydb.cursor();
+    #csv_data_purpleAir = csv.reader(open('media/purpleair_daily(Manipulated).csv'))
+    #next(csv_data_purpleAir,None)
+    #sqlInsertFormula = "INSERT INTO purpleair(daily,location,latitude, longitude, median, mean, max, sum, count) VALUES (%s, %s,%s, %s,%s, %s,%s, %s,%s)"
+    #for row in csv_data_purpleAir:
+    #    mycursor.execute(sqlInsertFormula, row)
+    #mydb.commit();
+
+
+    #engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost:3306/air')
+    epaMean2017Query ='''
+    SELECT daily,mean,  location from epadaily where daily LIKE "%2017";
+    '''
+    aqaMean2017Query='''
+    SELECT daily,mean,location from epadaily where daily LIKE "%2017";
+    
+    '''
+
+    dfEpaMean2017 = pd.read_sql(epaMean2017Query,con=mydb)
+    #fig= px.scatter(dfEpaMean2017, x=dfEpaMean2017["mean"], y=aqaMean2017Query["mean"], name="2017")
+    df = px.data.tips()
+    fig = px.scatter(df, x="total_bill", y="tip", facet_col="smoker", color="sex", trendline="ols")
+    fig.show()
+
+    results = px.get_trendline_results(fig)
+    print(results)
+    #results.query("sex == 'Male' and smoker == 'Yes'").px_fit_results.iloc[0].summary()
+    #this uses statmodels 
+    # to install
+    #python -m pip install statsmodels 
+    return render(request, "graphs/multipleBoxPlot.html")
+
+
+
+
+
+#pm25 vs year (catagorized by districts)
+def lineChartsWithDots(request):
+
+
+
+    mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="root",
+    database="air"
+    )
+    conn = mydb;
+    avgpm25for2017Dhaka =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2017" AND division= "Dhaka"; 
+        """,conn
+    )
+    avgpm25for2018Dhaka =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2018" AND division= "Dhaka"; 
+        """,conn
+    )
+    avgpm25for2019Dhaka =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2019" AND division= "Dhaka"; 
+        """,conn
+    )
+    avgpm25for2020Dhaka =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2020" AND division= "Dhaka"; 
+        """,conn
+    )
+    avgpm25for2021Dhaka =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2021" AND division= "Dhaka"; 
+        """,conn
+    )
+
+
+    DhakaAvgPM25For2017Value=avgpm25for2017Dhaka['AVG(PM25)'][0]
+    DhakaAvgPM25For2018Value=avgpm25for2018Dhaka['AVG(PM25)'][0]
+    DhakaAvgPM25For2019Value=avgpm25for2019Dhaka['AVG(PM25)'][0]
+    DhakaAvgPM25For2020Value=avgpm25for2020Dhaka['AVG(PM25)'][0]
+    DhakaAvgPM25For2021Value=avgpm25for2021Dhaka['AVG(PM25)'][0]
+
+    
+    
+    print("dhaka 2017 ",DhakaAvgPM25For2017Value)
+    print("\ndhaka 2018 ",DhakaAvgPM25For2018Value)
+    print("\ndhaka 2019 ",DhakaAvgPM25For2019Value)
+    print("\ndhaka 2020 ",DhakaAvgPM25For2020Value)
+    print("\ndhaka 2021 ",DhakaAvgPM25For2021Value)
+   
+    #for Rangpur
+    avgpm25for2017Rangpur =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2017" AND division= "Rangpur"; 
+        """,conn
+    )
+    avgpm25for2018Rangpur =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2018" AND division= "Rangpur"; 
+        """,conn
+    )
+    avgpm25for2019Rangpur =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2019" AND division= "Rangpur"; 
+        """,conn
+    )
+    avgpm25for2020Rangpur =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2020" AND division= "Rangpur"; 
+        """,conn
+    )
+    avgpm25for2021Rangpur =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2021" AND division= "Rangpur"; 
+        """,conn
+    )
+
+    RangpurAvgPM25For2017Value=avgpm25for2017Rangpur['AVG(PM25)'][0]
+    RangpurAvgPM25For2018Value=avgpm25for2018Rangpur['AVG(PM25)'][0]
+    RangpurAvgPM25For2019Value=avgpm25for2019Rangpur['AVG(PM25)'][0]
+    RangpurAvgPM25For2020Value=avgpm25for2020Rangpur['AVG(PM25)'][0]
+    RangpurAvgPM25For2021Value=avgpm25for2021Rangpur['AVG(PM25)'][0]
+
+
+    #for Khulna
+    avgpm25for2017Khulna =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2017" AND division= "Khulna"; 
+        """,conn
+    )
+    avgpm25for2018Khulna =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2018" AND division= "Khulna"; 
+        """,conn
+    )
+    avgpm25for2019Khulna =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2019" AND division= "Khulna"; 
+        """,conn
+    )
+    avgpm25for2020Khulna =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2020" AND division= "Khulna"; 
+        """,conn
+    )
+    avgpm25for2021Khulna =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2021" AND division= "Khulna"; 
+        """,conn
+    )
+
+    KhulnaAvgPM25For2017Value=avgpm25for2017Khulna['AVG(PM25)'][0]
+    KhulnaAvgPM25For2018Value=avgpm25for2018Khulna['AVG(PM25)'][0]
+    KhulnaAvgPM25For2019Value=avgpm25for2019Khulna['AVG(PM25)'][0]
+    KhulnaAvgPM25For2020Value=avgpm25for2020Khulna['AVG(PM25)'][0]
+    KhulnaAvgPM25For2021Value=avgpm25for2021Khulna['AVG(PM25)'][0]
+    
+     #for Syhlet
+    avgpm25for2017Syhlet =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2017" AND division= "Sylhet"; 
+        """,conn
+    )
+    avgpm25for2018Syhlet =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2018" AND division= "Sylhet"; 
+        """,conn
+    )
+    avgpm25for2019Syhlet =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2019" AND division= "Sylhet"; 
+        """,conn
+    )
+    avgpm25for2020Syhlet =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2020" AND division= "Sylhet"; 
+        """,conn
+    )
+    avgpm25for2021Syhlet =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2021" AND division= "Sylhet"; 
+        """,conn
+    )
+    SyhletAvgPM25For2017Value=avgpm25for2017Syhlet['AVG(PM25)'][0]
+    SyhletAvgPM25For2018Value=avgpm25for2018Syhlet['AVG(PM25)'][0]
+    SyhletAvgPM25For2019Value=avgpm25for2019Syhlet['AVG(PM25)'][0]
+    SyhletAvgPM25For2020Value=avgpm25for2020Syhlet['AVG(PM25)'][0]
+    SyhletAvgPM25For2021Value=avgpm25for2021Syhlet['AVG(PM25)'][0]
+
+    print("  Shylet 2017 ",SyhletAvgPM25For2017Value)
+    print("\nShylet 2018 ",SyhletAvgPM25For2018Value)
+    print("\nShylet 2019 ",SyhletAvgPM25For2019Value)
+    print("\nShylet 2020 ",SyhletAvgPM25For2020Value)
+    print("\nShylet 2021 ",SyhletAvgPM25For2021Value)
+    
+     #for Rajshahi
+    avgpm25for2017Rajshahi =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2017" AND division= "Rajshahi"; 
+        """,conn
+    )
+    avgpm25for2018Rajshahi =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2018" AND division= "Rajshahi"; 
+        """,conn
+    )
+    avgpm25for2019Rajshahi =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2019" AND division= "Rajshahi"; 
+        """,conn
+    )
+    avgpm25for2020Rajshahi =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2020" AND division= "Rajshahi"; 
+        """,conn
+    )
+    avgpm25for2021Rajshahi =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2021" AND division= "Rajshahi"; 
+        """,conn
+    )
+
+    RajshahiAvgPM25For2018Value=avgpm25for2018Rajshahi['AVG(PM25)'][0]
+    RajshahiAvgPM25For2019Value=avgpm25for2019Rajshahi['AVG(PM25)'][0]
+    RajshahiAvgPM25For2020Value=avgpm25for2020Rajshahi['AVG(PM25)'][0]
+    RajshahiAvgPM25For2017Value=avgpm25for2017Rajshahi['AVG(PM25)'][0]
+    RajshahiAvgPM25For2021Value=avgpm25for2021Rajshahi['AVG(PM25)'][0]
+    
+     #for Chittagong
+  
+    avgpm25for2017Chittagong =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2017" AND division= "Chittagong"; 
+        """,conn
+    )
+
+    avgpm25for2018Chittagong =pd.read_sql_query(
+            """
+            select AVG(PM25) from finaltraindata where time Like "%2018" AND division= "Chittagong"; 
+            """,conn
+        )
+
+    avgpm25for2019Chittagong =pd.read_sql_query(
+            """
+            select AVG(PM25) from finaltraindata where time Like "%2019" AND division= "Chittagong"; 
+            """,conn
+        )
+
+    avgpm25for2020Chittagong =pd.read_sql_query(
+            """
+            select AVG(PM25) from finaltraindata where time Like "%2020" AND division= "Chittagong"; 
+            """,conn
+        )
+    avgpm25for2021Chittagong =pd.read_sql_query(
+            """
+            select AVG(PM25) from finaltraindata where time Like "%2021" AND division= "Chittagong"; 
+            """,conn
+        )
+    ChittagongAvgPM25For2018Value=avgpm25for2018Chittagong['AVG(PM25)'][0]
+    ChittagongAvgPM25For2019Value=avgpm25for2019Chittagong['AVG(PM25)'][0]
+    ChittagongAvgPM25For2020Value=avgpm25for2020Chittagong['AVG(PM25)'][0]
+    ChittagongAvgPM25For2017Value=avgpm25for2017Chittagong['AVG(PM25)'][0]
+    ChittagongAvgPM25For2021Value=avgpm25for2021Chittagong['AVG(PM25)'][0]
+
+     #for Mymensingh
+  
+    avgpm25for2017Mymensingh =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2017" AND division= "Mymensingh"; 
+        """,conn
+    )
+    avgpm25for2018Mymensingh =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2018" AND division= "Mymensingh"; 
+        """,conn
+    )
+    avgpm25for2019Mymensingh =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2019" AND division= "Mymensingh"; 
+        """,conn
+    )
+    avgpm25for2020Mymensingh =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2020" AND division= "Mymensingh"; 
+        """,conn
+    )
+    avgpm25for2021Mymensingh =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2021" AND division= "Mymensingh"; 
+        """,conn
+    )
+
+    MymensinghAvgPM25For2018Value=avgpm25for2018Mymensingh['AVG(PM25)'][0]
+    MymensinghAvgPM25For2019Value=avgpm25for2019Mymensingh['AVG(PM25)'][0]
+    MymensinghAvgPM25For2020Value=avgpm25for2020Mymensingh['AVG(PM25)'][0]
+    MymensinghAvgPM25For2017Value=avgpm25for2017Mymensingh['AVG(PM25)'][0]
+    MymensinghAvgPM25For2021Value=avgpm25for2021Mymensingh['AVG(PM25)'][0]
+
+     #for Barisal
+  
+    avgpm25for2017Barisal =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2017" AND division= "Barisal"; 
+        """,conn
+    )
+    avgpm25for2018Barisal =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2018" AND division= "Barisal"; 
+        """,conn
+    )
+    avgpm25for2019Barisal =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2019" AND division= "Barisal"; 
+        """,conn
+    )
+    avgpm25for2020Barisal =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2020" AND division= "Barisal"; 
+        """,conn
+    )
+    avgpm25for2021Barisal =pd.read_sql_query(
+        """
+        select AVG(PM25) from finaltraindata where time Like "%2021" AND division= "Barisal"; 
+        """,conn
+    )
+    BarisalAvgPM25For2018Value=avgpm25for2018Barisal['AVG(PM25)'][0]
+    BarisalAvgPM25For2019Value=avgpm25for2019Barisal['AVG(PM25)'][0]
+    BarisalAvgPM25For2020Value=avgpm25for2020Barisal['AVG(PM25)'][0]
+    BarisalAvgPM25For2017Value=avgpm25for2017Barisal['AVG(PM25)'][0]
+    BarisalAvgPM25For2021Value=avgpm25for2021Barisal['AVG(PM25)'][0]
+
+
+
+
+
+
+
+
+    engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost:3306/air')
+
+    #df = pd.read_sql_table("finaltraindata", engine, columns=['time', 'PM25', 'division'])
+    query ='''
+    select AVG(PM25) from finaltraindata where time Like "%2017" AND division= "Dhaka"; 
+    
+    '''
+    queryRangpur ='''
+    SELECT time, PM25 from finalTrainData where division = 'Rangpur'
+    
+    '''
+    queryKhulna  ='''
+    SELECT time, PM25 from finalTrainData where division = 'Khulna'
+    
+    '''
+    querySylhet  ='''
+    SELECT time, PM25 from finalTrainData where division = 'Sylhet'
+    
+    '''
+
+    queryRajshahi ='''
+    SELECT time, PM25 from finalTrainData where division = 'Rajshahi'
+    
+    '''
+    queryChittagong ='''
+    SELECT time, PM25 from finalTrainData where division = 'Chittagong'
+    
+    '''
+
+    queryMymensingh ='''
+    SELECT time, PM25 from finalTrainData where division = 'Mymensingh'
+    
+    '''
+
+    queryBarisal ='''
+    SELECT time, PM25 from finalTrainData where division = 'Barisal'
+    
+    '''
+    
+    
+    
+    df2 = pd.read_sql_query(queryRangpur, engine)
+    df3 = pd.read_sql_query(queryKhulna, engine)
+    df4 = pd.read_sql_query(querySylhet, engine)
+    df5 = pd.read_sql_query(queryRajshahi, engine)
+    df6 = pd.read_sql_query(queryChittagong, engine)
+    df7 = pd.read_sql_query(queryMymensingh, engine)
+    df8 = pd.read_sql_query(queryBarisal, engine)
+
+    DhakaAvgPM25For2017Value=avgpm25for2017Dhaka['AVG(PM25)'][0]
+    DhakaAvgPM25For2018Value=avgpm25for2018Dhaka['AVG(PM25)'][0]
+    DhakaAvgPM25For2019Value=avgpm25for2019Dhaka['AVG(PM25)'][0]
+    DhakaAvgPM25For2020Value=avgpm25for2020Dhaka['AVG(PM25)'][0]
+    DhakaAvgPM25For2021Value=avgpm25for2021Dhaka['AVG(PM25)'][0]
+    
+    dict1={
+        "YEAR":['2017','2018','2019','2020','2021'],
+        "AvgPM25":[DhakaAvgPM25For2017Value, DhakaAvgPM25For2018Value, DhakaAvgPM25For2019Value, DhakaAvgPM25For2020Value, DhakaAvgPM25For2021Value]
+    }
+
+    dhakaDf=pd.DataFrame(dict1);
+
+    dict1={
+        "YEAR":['2017','2018','2019','2020','2021'],
+        "AvgPM25":[RangpurAvgPM25For2017Value,RangpurAvgPM25For2018Value, RangpurAvgPM25For2019Value, RangpurAvgPM25For2020Value, RangpurAvgPM25For2021Value]
+    }
+
+    RangpurDf=pd.DataFrame(dict1);
+    
+    #dict2={
+    #    "YEAR":['2017','2018','2019','2020','2021'],
+    #    "division":["Dhaka","Rangpur","Khulna","Syhlet","Rajshahi","Chittagong","Mymensingh","Barisal"],
+    #    "AvgPM25":[DhakaAvgPM25For2017Value, DhakaAvgPM25For2018Value, DhakaAvgPM25For2019Value, DhakaAvgPM25For2020Value, DhakaAvgPM25For2021Value]
+    #}
+
+    dict1={
+        "YEAR":['2017','2018','2019','2020','2021'],
+        "AvgPM25":[KhulnaAvgPM25For2017Value,KhulnaAvgPM25For2018Value, KhulnaAvgPM25For2019Value, KhulnaAvgPM25For2020Value, KhulnaAvgPM25For2021Value]
+    }
+
+    KhulnaDf=pd.DataFrame(dict1);
+
+    dict1={
+        "YEAR":['2017','2018','2019','2020','2021'],
+        "AvgPM25":[SyhletAvgPM25For2017Value,SyhletAvgPM25For2018Value, SyhletAvgPM25For2019Value, SyhletAvgPM25For2020Value, SyhletAvgPM25For2021Value]
+    }
+
+    SyhletDf=pd.DataFrame(dict1);
+
+    dict1={
+        "YEAR":['2017','2018','2019','2020','2021'],
+        "AvgPM25":[RajshahiAvgPM25For2017Value,RajshahiAvgPM25For2018Value, RajshahiAvgPM25For2019Value, RajshahiAvgPM25For2020Value, RajshahiAvgPM25For2021Value]
+    }
+
+    RajshahiDf=pd.DataFrame(dict1);
+
+    dict1={
+        "YEAR":['2017','2018','2019','2020','2021'],
+        "AvgPM25":[RajshahiAvgPM25For2017Value,RajshahiAvgPM25For2018Value, RajshahiAvgPM25For2019Value, RajshahiAvgPM25For2020Value, RajshahiAvgPM25For2021Value]
+    }
+
+    RajshahiDf=pd.DataFrame(dict1);
+
+    dict1={
+        "YEAR":['2017','2018','2019','2020','2021'],
+        "AvgPM25":[ChittagongAvgPM25For2017Value,ChittagongAvgPM25For2018Value, ChittagongAvgPM25For2019Value, ChittagongAvgPM25For2020Value, ChittagongAvgPM25For2021Value]
+    }
+
+    ChittagongDf=pd.DataFrame(dict1);
+
+    dict1={
+        "YEAR":['2017','2018','2019','2020','2021'],
+        "AvgPM25":[MymensinghAvgPM25For2017Value,MymensinghAvgPM25For2018Value, MymensinghAvgPM25For2019Value, MymensinghAvgPM25For2020Value, MymensinghAvgPM25For2021Value]
+    }
+
+    MymensinghDf=pd.DataFrame(dict1);
+
+    
+    dict1={
+        "YEAR":['2017','2018','2019','2020','2021'],
+        "AvgPM25":[BarisalAvgPM25For2017Value,BarisalAvgPM25For2018Value, BarisalAvgPM25For2019Value, BarisalAvgPM25For2020Value, BarisalAvgPM25For2021Value]
+    }
+
+    BarisalDf=pd.DataFrame(dict1);
+
+    
+    #display(df)
+    fig = go.Figure()
+    #fig2 = go.Figure()
+    # Create and style traces
+    fig.add_trace(go.Scatter(x=dhakaDf["YEAR"], y=dhakaDf["AvgPM25"], name='Dhaka',mode='lines'))
+    fig.add_trace(go.Scatter(x=RangpurDf["YEAR"], y=RangpurDf["AvgPM25"], name='Rangpur',mode='lines'))
+    fig.add_trace(go.Scatter(x=KhulnaDf["YEAR"], y=KhulnaDf["AvgPM25"], name='Khulna',mode='lines'))
+    fig.add_trace(go.Scatter(x=SyhletDf["YEAR"], y=SyhletDf["AvgPM25"], name='Syhlet',mode='lines'))
+    fig.add_trace(go.Scatter(x=RajshahiDf["YEAR"], y=RajshahiDf["AvgPM25"], name='Rajshahi',mode='lines'))
+    fig.add_trace(go.Scatter(x=ChittagongDf["YEAR"], y=ChittagongDf["AvgPM25"], name='Chittagong',mode='lines'))
+    fig.add_trace(go.Scatter(x=MymensinghDf["YEAR"], y=MymensinghDf["AvgPM25"], name='Mymensingh',mode='lines'))
+    fig.add_trace(go.Scatter(x=BarisalDf["YEAR"], y=BarisalDf["AvgPM25"], name='Barisal',mode='lines'))
+    
+
+    fig.update_layout(
+    title="avgpm25 vs time", xaxis_title="Time", yaxis_title="AVG PM 25"
+    )
+   
+    
+    fig.show()
+    
+    return render(request, "graphs/lineChartsWithDots.html")
+    #media\csvForLineGraph.csv
+    #Chittagong
+    #Mymensingh
+    #Barisal
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -512,18 +1025,7 @@ def multipleBoxPlot(request):
     fig.show()
     return render(request, "graphs/multipleBoxPlot.html")
 
-def scatterPlotWithLineGraph(request):
-    df = px.data.tips()
-    fig = px.scatter(df, x="total_bill", y="tip", facet_col="smoker", color="sex", trendline="ols")
-    fig.show()
 
-    results = px.get_trendline_results(fig)
-    print(results)
-    results.query("sex == 'Male' and smoker == 'Yes'").px_fit_results.iloc[0].summary()
-    #this uses statmodels 
-    # to install
-    #python -m pip install statsmodels 
-    return render(request, "graphs/multipleBoxPlot.html")
 
 def multipleLineCharts(request):
     df = px.data.gapminder().query("continent == 'Oceania'")
@@ -531,14 +1033,7 @@ def multipleLineCharts(request):
     fig.show()
     return render(request, "graphs/multipleLineCharts.html")
 
-def lineChartsWithDots(request):
-    df = px.data.gapminder().query("country in ['Canada', 'Botswana']")
-    fig = px.line(df, x="lifeExp", y="gdpPercap", color="country", text="year")
-    fig.update_traces(textposition="bottom right")
-    fig.show()
-    return render(request, "graphs/lineChartsWithDots.html")
-    #media\csvForLineGraph.csv
-    
+
 
 
 
