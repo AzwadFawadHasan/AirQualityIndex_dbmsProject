@@ -41,6 +41,7 @@ urlpatterns = [
 
     #path('country/', views.country, name='country'),
     path('country2/', views.country2, name='country2'),
+    path('boxPlotOne/', views.boxPlotOne, name='boxPlotOne'),
 
     #path('csvUpload/', csvUpload, name='csvUpload'),
     #path('csvUpload/', csvUpload, name='csvUpload')

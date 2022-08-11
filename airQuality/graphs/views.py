@@ -22,7 +22,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import geojson
 import urllib
-
+import csv
 import plotly.figure_factory as ff
 import numpy as np
 
@@ -62,6 +62,13 @@ from pandas import DataFrame
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+
+import plotly.express as px
+import pandas as pd
+import numpy as np
+import plotly.offline as pyo
+import plotly. graph_objs as go
+
 
 
 
@@ -653,24 +660,7 @@ def scatterPlotWithLineGraph(request):
     
     
     fig.show()
-    
-    
 
-    
-  
-    
-   
-    
-    
-    
-  
-    
-    
-    
-  
-
-
-   
     return render(request, "graphs/multipleBoxPlot.html")
 
 
@@ -1126,10 +1116,7 @@ def lineChartsWithDots(request):
     fig.show()
     
     return render(request, "graphs/lineChartsWithDots.html")
-    #media\csvForLineGraph.csv
-    #Chittagong
-    #Mymensingh
-    #Barisal
+   
 
 
 
@@ -1145,11 +1132,6 @@ def lineChartsWithDots(request):
 
 
 
-import plotly.express as px
-import pandas as pd
-import numpy as np
-import plotly.offline as pyo
-import plotly. graph_objs as go
 
 
 # box plot for no 4
@@ -1208,6 +1190,16 @@ def multipleBoxPlot(request):
 
     
     return render(request, "graphs/multipleBoxPlot.html")
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1296,6 +1288,13 @@ def multipleLineCharts(request):
     
 
     return render(request, "graphs/multipleLineCharts.html")
+
+
+
+
+
+
+
 
 
 
@@ -1477,7 +1476,7 @@ def country2(request):
 
     return render(request, "graphs/country2.html")
     
-import csv
+
 
 
 ###
@@ -1508,3 +1507,7 @@ import csv
 #        
 #
 #
+
+
+def boxPlotOne(request):
+    return render(request, "graphs/country2.html")

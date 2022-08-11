@@ -50,6 +50,7 @@ urlpatterns = [
     path('country2/', include('graphs.urls')),
     #path('csvs/', include('csvs.urls', namespace='csvs')),
     #path('csvUpload/', include('graphs.urls')),
+    path('boxPlotOne/', include('graphs.urls')),
     
     
    # path('upload/', include('csvs.upload')),
