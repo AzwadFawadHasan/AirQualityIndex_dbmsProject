@@ -1,7 +1,8 @@
 
-
 from wsgiref.handlers import format_date_time
 from django.shortcuts import render
+import pymysql
+import pandas as pd
 
 from django.shortcuts import render
 
@@ -57,26 +58,21 @@ from django.contrib.auth.decorators import permission_required
 from .models import FilesUpload
 import plotly.graph_objects as go
 from pandas import DataFrame
-#pio.renderers.default = 'browser'
+
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
 
 
-# Create your views here.
 
-    #x_data = [0,1,2,3]
-    #y_data = [x**2 for x in x_data]
-    #plot_div = plot([Scatter(x=x_data, y=y_data,
-    #                    mode='lines', name='test',
-    #                    opacity=0.8, marker_color='green')],
-    #           output_type='div')
-    #return render(request, "base/index.html", context={'plot_div': plot_div})
-    #
-    #import plotly.graph_objects as go
 
-    # Add data
 
-#4.
-#A comparison between multiple data sources should be shown using line charts,
-#scatterplots, and boxplots, e.g.,
+
+
+
+
+
+
 
 
 def lineCharts(request):
@@ -483,45 +479,196 @@ def lineCharts(request):
 
 
 def scatterPlotWithLineGraph(request):
-    mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="air"
-    )
-#select daily, location from epadaily where daily between '1/1/2017' and '12/31/2017'
 
-#inserting data into purpleair table in the database
-    #mycursor = mydb.cursor();
-    #csv_data_purpleAir = csv.reader(open('media/purpleair_daily(Manipulated).csv'))
-    #next(csv_data_purpleAir,None)
-    #sqlInsertFormula = "INSERT INTO purpleair(daily,location,latitude, longitude, median, mean, max, sum, count) VALUES (%s, %s,%s, %s,%s, %s,%s, %s,%s)"
-    #for row in csv_data_purpleAir:
-    #    mycursor.execute(sqlInsertFormula, row)
-    #mydb.commit();
+    db_name = "air"
+    db_host = "localhost"
+    db_username = "root"
+    db_password = "root"
 
-
-    #engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost:3306/air')
-    epaMean2017Query ='''
-    SELECT daily,mean,  location from epadaily where daily LIKE "%2017";
-    '''
-    aqaMean2017Query='''
-    SELECT daily,mean,location from epadaily where daily LIKE "%2017";
+    try:
+        conn=pymysql.connect(host =db_host,
+                            port = int(3306),
+                            user = db_username,
+                            passwd = db_password,
+                            db=db_name)
+    except e:
+            print(e)
     
-    '''
+   
+    
+    df = pd.read_sql_query("SELECT * FROM epadaily", conn)
+    df2 = pd.read_sql_query("SELECT * FROM purpleair", conn)
+    df['daily'] = pd.to_datetime(df['daily'])
+    df2['daily'] = pd.to_datetime(df2['daily'])
 
-    dfEpaMean2017 = pd.read_sql(epaMean2017Query,con=mydb)
-    #fig= px.scatter(dfEpaMean2017, x=dfEpaMean2017["mean"], y=aqaMean2017Query["mean"], name="2017")
-    df = px.data.tips()
-    fig = px.scatter(df, x="total_bill", y="tip", facet_col="smoker", color="sex", trendline="ols")
+
+    filtered_df_epa_2017 = df.query("daily > '2016-12-31' and daily  < '2018-1-1'")
+    #adding year 2017 as a column to the dataframe
+    YEARS =2017
+    filtered_df_epa_2017['YEARS']=YEARS
+    #print(filtered_df_epa_2017)
+
+    filtered_df_aqa_2017 = df2.query("daily > '2016-12-31' and daily  < '2018-1-1'")
+
+    filtered_df_aqa_2017.rename(columns = {'mean':'aqamean'},inplace = True)
+    extracted_col = filtered_df_aqa_2017["aqamean"]
+    #rint("column to added from first dataframe to second:")
+    #isplay(extracted_col)
+    
+    filtered_df_epa_2017 = filtered_df_epa_2017.join(extracted_col)
+
+
+
+    #for 2018
+    
+    filtered_df_epa_2018 = df.query("daily > '2017-12-31' and daily  < '2019-1-1'")
+    #adding year 2017 as a column to the dataframe
+    YEARS =2018
+    filtered_df_epa_2018['YEARS']=YEARS
+    #print(filtered_df_epa_2018)
+
+    filtered_df_aqa_2018 = df2.query("daily > '2017-12-31' and daily  < '2019-1-1'")
+
+    filtered_df_aqa_2018.rename(columns = {'mean':'aqamean'},inplace = True)
+    extracted_col = filtered_df_aqa_2018["aqamean"]
+    #rint("column to added from first dataframe to second:")
+    #isplay(extracted_col)
+    
+    filtered_df_epa_2018 = filtered_df_epa_2018.join(extracted_col)
+    #2018 ends
+    
+    #for 2019
+    
+    
+    filtered_df_epa_2019 = df.query("daily > '2018-12-31' and daily  < '2020-1-1'")
+    #adding year 2017 as a column to the dataframe
+    YEARS =2019
+    filtered_df_epa_2019['YEARS']=YEARS
+    #print(filtered_df_epa_2018)
+
+    filtered_df_aqa_2019 = df2.query("daily > '2018-12-31' and daily  < '2020-1-1'")
+
+    filtered_df_aqa_2019.rename(columns = {'mean':'aqamean'},inplace = True)
+    extracted_col = filtered_df_aqa_2019["aqamean"]
+    #rint("column to added from first dataframe to second:")
+    #isplay(extracted_col)
+    
+    filtered_df_epa_2019 = filtered_df_epa_2019.join(extracted_col)
+    #2019 ends
+    
+    #for 2020
+    
+    
+    filtered_df_epa_2020 = df.query("daily > '2019-12-31' and daily  < '2021-1-1'")
+    #adding year 2017 as a column to the dataframe
+    YEARS =2020
+    filtered_df_epa_2020['YEARS']=YEARS
+    #print(filtered_df_epa_2018)
+
+    filtered_df_aqa_2020 = df2.query("daily > '2019-12-31' and daily  < '2021-1-1'")
+
+    filtered_df_aqa_2020.rename(columns = {'mean':'aqamean'},inplace = True)
+    extracted_col = filtered_df_aqa_2020["aqamean"]
+    #rint("column to added from first dataframe to second:")
+    #isplay(extracted_col)
+    
+    filtered_df_epa_2020 = filtered_df_epa_2020.join(extracted_col)
+    #2020 ends
+    
+    #for 2021
+    
+    
+    filtered_df_epa_2021 = df.query("daily > '2020-12-31' and daily  < '2022-1-1'")
+    #adding year 2017 as a column to the dataframe
+    YEARS =2021
+    filtered_df_epa_2021['YEARS']=YEARS
+    #print(filtered_df_epa_2018)
+
+    filtered_df_aqa_2021 = df2.query("daily > '2020-12-31' and daily  < '2022-1-1'")
+
+    filtered_df_aqa_2021.rename(columns = {'mean':'aqamean'},inplace = True)
+    extracted_col = filtered_df_aqa_2021["aqamean"]
+    #rint("column to added from first dataframe to second:")
+    #isplay(extracted_col)
+    
+    filtered_df_epa_2021 = filtered_df_epa_2021.join(extracted_col)
+    #2021 ends
+    
+    
+    
+    
+    color_discrete_map = {'YEARS': 'rgb(255,0,0)', 'YEARS': 'rgb(0,255,0)', 'YEARS': 'rgb(0,0,255)'}
+    #color_discrete_map = {'virginica': 'blue', 'setosa': 'red', 'versicolor': 'green'}
+    
+    fig1 =px.scatter(filtered_df_epa_2017, x=filtered_df_epa_2017['aqamean'], y=filtered_df_epa_2017['mean'],symbol="YEARS", labels= {"x":"EPA_MEAN","y":"AQA_MEAN"})#.update_traces(marker=dict(color='blue'))
+
+    fig2 = px.scatter(filtered_df_epa_2018, x=filtered_df_epa_2018['aqamean'], y=filtered_df_epa_2018['mean'], symbol="YEARS"
+                      
+                   ).update_traces(marker=dict(color='orange'))
+    
+    fig3 = px.scatter(filtered_df_epa_2019, x=filtered_df_epa_2019['aqamean'], y=filtered_df_epa_2019['mean'], symbol="YEARS"
+                          
+                   ).update_traces(marker=dict(color='red'))
+    
+    fig4 = px.scatter(filtered_df_epa_2020, x=filtered_df_epa_2020['aqamean'], y=filtered_df_epa_2020['mean'], symbol="YEARS"
+                          
+                   ).update_traces(marker=dict(color='green'))
+    
+    #fig5 = px.scatter(filtered_df_epa_2021, x=filtered_df_epa_2021['aqamean'], y=filtered_df_epa_2021['mean'], color='YEARS', title='scatterplot',
+    #               labels= {"mean":"EPA_MEAN",
+    #                        "aqamean":"AQA_MEAN"},
+                          
+     #              ).update_traces(marker=dict(color='purple'))
+
+    fig = go.Figure(data = fig1.data + fig2.data + fig3.data +fig4.data)
+    fig.update_yaxes(autorange=True)
+    fig.update_xaxes(autorange=True)
+    fig.update_layout(autotypenumbers='convert types')
+    #@fig.update_layout(title_x=0)
+    #fig.update_layout(margin_autoexpand=False)
+    fig.update_traces(marker=dict(
+                              line=dict(width=2,
+                                        color='DarkSlateGrey')),
+                 selector=dict(mode='markers'))
+   # fig.update_title='scatterplot',
+     #              labels= {"mean":"EPA_MEAN",
+    #                        "aqamean":"AQA_MEAN"},#color_discrete_map=color_discrete_map
+    
+    
+    
+    
+    #fig.update_layout(colorscale=dict(...))
+    #fig.update_layout(title="scatterplot",  labels={'x':'t', 'y':'cos(t)'})
+    
+                  #xaxis_range=[-1,4], yaxis_range=[len(set(namestems)),-1],
+                 # margin=dict(b=0,r=0), xaxis_side="top", height=1400, width=400)
+    fig.update_layout(title_text="epa vs aqa mean")
+    fig.update_layout(title_xanchor="auto")
+    
+    #fig.update_layout()
+    
+    #fig.update_layout(showlegend=True)
+    
+    
     fig.show()
+    
+    
 
-    results = px.get_trendline_results(fig)
-    print(results)
-    #results.query("sex == 'Male' and smoker == 'Yes'").px_fit_results.iloc[0].summary()
-    #this uses statmodels 
-    # to install
-    #python -m pip install statsmodels 
+    
+  
+    
+   
+    
+    
+    
+  
+    
+    
+    
+  
+
+
+   
     return render(request, "graphs/multipleBoxPlot.html")
 
 
@@ -1028,6 +1175,8 @@ def multipleBoxPlot(request):
 
 
 def multipleLineCharts(request):
+    app= dash.Dash(__name__)
+    
     df = px.data.gapminder().query("continent == 'Oceania'")
     fig = px.line(df, x='year', y='lifeExp', color='country', markers=True)
     fig.show()
