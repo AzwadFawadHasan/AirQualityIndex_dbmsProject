@@ -1145,33 +1145,68 @@ def lineChartsWithDots(request):
 
 
 
+import plotly.express as px
+import pandas as pd
+import numpy as np
+import plotly.offline as pyo
+import plotly. graph_objs as go
 
 
 # box plot for no 4
 def multipleBoxPlot(request):
-    N = 30     # Number of boxes
+    db_name = "air"
+    db_host = "localhost"
+    db_username = "root"
+    db_password = "root"
 
-    # generate an array of rainbow colors by fixing the saturation and lightness of the HSL
-    # representation of colour and marching around the hue.
-    # Plotly accepts any CSS color format, see e.g. http://www.w3schools.com/cssref/css_colors_legal.asp.
-    c = ['hsl('+str(h)+',50%'+',50%)' for h in np.linspace(0, 360, N)]
+    try:
+        conn=pymysql.connect(host =db_host,
+                            port = int(3306),
+                            user = db_username,
+                            passwd = db_password,
+                            db=db_name)
+    except e:
+            print(e)
+    
+   
+    
+    df = pd.read_sql_query("SELECT * FROM finaltraindata", conn)
+    df1 = pd.read_sql_query("SELECT * FROM epadaily", conn)
+    df2 = pd.read_sql_query("SELECT * FROM purpleair", conn)
 
-    # Each box is represented by a dict that contains the data, the type, and the colour.
-    # Use list comprehension to describe N boxes, each with a different colour and with different randomly generated data:
-    fig = go.Figure(data=[go.Box(
-     y=3.5 * np.sin(np.pi * i/N) + i/N + (1.5 + 0.5 * np.cos(np.pi*i/N)) * np.random.rand(10),
-        marker_color=c[i]
-        ) for i in range(int(N))])
+    df['time'] = pd.to_datetime(df['time'])
+    df1['daily'] = pd.to_datetime(df1['daily'])
+    df2['daily'] = pd.to_datetime(df2['daily'])
 
-    # format the layout
-    fig.update_layout(
-        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-        yaxis=dict(zeroline=False, gridcolor='white'),
-        paper_bgcolor='rgb(233,233,233)',
-        plot_bgcolor='rgb(233,233,233)',
+    trace0 = go.Box(
+    y=df['PM25'],
+    name = 'finaltraindata'
+
     )
+    trace1 = go.Box(
+        y=df1['mean'],
+        name = 'epadaily'
 
+    )
+    trace2 = go.Box(
+        y=df2['mean'],
+        name = 'purpletrain'
+
+    )
+    data = [trace0, trace1,trace2]
+    layout =go.Layout(title="Boxplot")
+    fig = go.Figure(data=data, layout=layout)
+    
+    
+    fig.update_layout(autotypenumbers='convert types')
+    #fig.update_layout(yaxis_range=[-4,400])
+    #fig.update_yaxes(range = [0,400])
     fig.show()
+    pyo.plot(fig)
+
+
+
+    
     return render(request, "graphs/multipleBoxPlot.html")
 
 
