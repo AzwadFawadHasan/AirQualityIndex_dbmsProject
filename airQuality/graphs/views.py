@@ -1466,6 +1466,7 @@ def boxPlotOne(request):
     fig.update_layout(title_xanchor="auto")
     fig.update_xaxes(title_text='station')
     fig.update_yaxes(title_text='PM25')
+    fig.update_layout(title_text="Box plot of stationwise recorded PM2.5 concentration")
     #fig.update_layout(legend_traceorder="reversed")
     #legendgroup=df.sort_values("station", axis = 0, ascending = True,
     #                 inplace = True, na_position ='last')
