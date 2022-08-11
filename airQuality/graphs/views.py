@@ -644,6 +644,8 @@ def scatterPlotWithLineGraph(request):
                  # margin=dict(b=0,r=0), xaxis_side="top", height=1400, width=400)
     fig.update_layout(title_text="epa vs aqa mean")
     fig.update_layout(title_xanchor="auto")
+    fig.update_xaxes(title_text='AQA_MEAN')
+    fig.update_yaxes(title_text='EPA_MEAN')
     
     #fig.update_layout()
     
