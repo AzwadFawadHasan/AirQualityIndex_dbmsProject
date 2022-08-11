@@ -1417,6 +1417,67 @@ def country2(request):
 
 
 def boxPlotOne(request):
+    db_name = "air"
+    db_host = "localhost"
+    db_username = "root"
+    db_password = "root"
+
+    try:
+
+        conn=pymysql.connect(host =db_host,
+                                port = int(3306),
+                                user = db_username,
+                                passwd = db_password,
+                                db=db_name)
+    except e:
+
+
+        print(e)
+
+    
+
+    df = pd.read_sql_query("SELECT * FROM finaltraindata", conn)
+    df1 = pd.read_sql_query("SELECT * FROM epadaily", conn)
+    df2 = pd.read_sql_query("SELECT * FROM purpleair", conn)
+
+    df['time'] = pd.to_datetime(df['time'])
+    df1['daily'] = pd.to_datetime(df1['daily'])
+    df2['daily'] = pd.to_datetime(df2['daily'])
+
+    #pm25 vs station
+    #pm25 vs month (each box plot of different station)
+    #print (df)
+
+
+
+
+
+
+    fig = px.box(df, x="station", y="PM25", color="station")
+
+    fig.update_traces(quartilemethod="exclusive") 
+    #fig.update_traces(quartilemethod="linear")# or "inclusive", or "linear" by default
+    layout = go.Layout(legend={'traceorder':'normal'})
+    fig.update_layout(autotypenumbers='convert types')
+
+    fig.update_yaxes(autorange=True)
+    fig.update_xaxes(autorange=True)
+    fig.update_layout(title_text="PM25 vs station")
+    fig.update_layout(title_xanchor="auto")
+    fig.update_xaxes(title_text='station')
+    fig.update_yaxes(title_text='PM25')
+    #fig.update_layout(legend_traceorder="reversed")
+    #legendgroup=df.sort_values("station", axis = 0, ascending = True,
+    #                 inplace = True, na_position ='last')
+    #fig.update_layout(legend_traceorder="reversed+grouped")
+    fig.show()
+    
+
+
+
+
+
+
     return render(request, "graphs/boxPlotOne.html")
 
 
