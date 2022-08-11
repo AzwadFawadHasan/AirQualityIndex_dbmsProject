@@ -1343,108 +1343,15 @@ def barChartWithLines(request):
 
 
 
-def index4(request):
-    #negative bar chart graph with lines
-    fig = go.Figure()
-
-    fig.add_trace(
-    go.Scatter(
-         x=[0, 1, 2, 3, 4, 5],
-          y=[-1, -0.5, -0.7, -1.2, -0.3, -0.4]
-    ))
-
-    fig.add_trace(
-    go.Bar(
-        x=[0, 1, 2, 3, 4, 5],
-        y=[-1, -0.5, -0.7, -1.2, -0.3, -0.4]
-    ))
-
-    fig.show()
-    return render(request, "base/index4.html")
-
-
-def boxplot(request):
-    #negative bar chart graph with lines
-    
-
-    df = px.data.tips()
-
-    fig = px.box(df, x="day", y="total_bill", color="smoker")
-    fig.update_traces(quartilemethod="exclusive") # or "inclusive", or "linear" by default
-    fig.show()
-    return render(request, "base/boxplot.html")
-
-
-def dataDistribution(request):
-    #negative bar chart graph with lines
-    
-
-    # Add histogram data
-    x1 = np.random.randn(200) - 2
-    x2 = np.random.randn(200)
-    x3 = np.random.randn(200) + 2
-    x4 = np.random.randn(200) + 4
-
-    # Group data together
-    hist_data = [x1, x2, x3, x4]
-
-    group_labels = ['Group 1', 'Group 2', 'Group 3', 'Group 4']
-
-    # Create distplot with custom bin_size
-    fig = ff.create_distplot(hist_data, group_labels, bin_size=.2)
-    fig.show()
-    return render(request, "base/dataDistribution.html")
 
 
 
 
-def country(request):
-    #with urlopen('https://drive.google.com/file/d/18AwrNB1iest498bqN8Kf3PCKaC25JKl6/view?usp=sharing') as response:
-    #    counties = json.load(response)
-    #import pandas as pd
-    #data = pd.read_json('graphs/bangladesh.geojson')
-    #print(data)
-    #https://drive.google.com/file/d/18AwrNB1iest498bqN8Kf3PCKaC25JKl6/view?usp=sharing
-    #
-    #df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
-    #                   dtype={"fips": str})
-    #
-    #
-    #
-    #fig = px.choropleth_mapbox(df, geojson=counties, locations='fips', color='unemp',
-    #                           color_continuous_scale="Viridis",
-    #                           range_color=(0, 12),
-    #                           mapbox_style="carto-positron",
-    #                           zoom=3, center = {"lat": 37.0902, "lon": -95.7129},
-    #                           opacity=0.5,
-    #                           labels={'unemp':'unemployment rate'}
-    #                          )
-    #fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-    #fig.show()
 
-    bangladeshDistricts = json.load.open('graphs/bangladesh.geojson', 'r')
-    bangladeshDistricts['features'][0]
 
-    #with urlopen('https://github.com/realfahimreza/bangladesh-geojson/blob/master/bangladesh.geojson') as response:
-    #    counties = json.load(response)
-#
-    #import pandas as pd
-    #df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
-    #               dtype={"fips": str})
-#
-   #
-#
-    #fig = px.choropleth_mapbox(df, geojson=counties, locations='fips', color='unemp',
-    #                           range_color=(0, 12),
-    #                           color_continuous_scale="Viridis",
-    #                           mapbox_style="carto-positron",
-    #                           zoom=3, center = {"lat": 37.0902, "lon": -95.7129},
-    #                           opacity=0.5,
-    #                           labels={'unemp':'unemployment rate'}
-    #                      )
-    #fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-    #fig.show()
-    #return render(request, "graphs/country.html")
+
+
+
 
 
 
