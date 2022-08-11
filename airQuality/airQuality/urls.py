@@ -51,7 +51,8 @@ urlpatterns = [
     #path('csvs/', include('csvs.urls', namespace='csvs')),
     #path('csvUpload/', include('graphs.urls')),
     path('boxPlotOne/', include('graphs.urls')),
-    
+    path('boxPlotTwo/', include('graphs.urls')),
+    path('boxPlotThree/', include('graphs.urls')),
     
    # path('upload/', include('csvs.upload')),
     

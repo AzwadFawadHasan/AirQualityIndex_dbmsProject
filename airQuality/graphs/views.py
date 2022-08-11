@@ -1510,4 +1510,13 @@ def country2(request):
 
 
 def boxPlotOne(request):
-    return render(request, "graphs/country2.html")
+    return render(request, "graphs/boxPlotOne.html")
+
+
+def boxPlotTwo(request):
+    return render(request, "graphs/boxPlotTwo.html")
+
+
+def boxPlotThree(request):
+    #Season-Wise time based AQI data visualization using box plot
+    return render(request, "graphs/boxPlotThree.html")
