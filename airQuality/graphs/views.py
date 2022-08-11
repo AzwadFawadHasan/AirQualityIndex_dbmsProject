@@ -1196,8 +1196,8 @@ def multipleBoxPlot(request):
     data = [trace0, trace1,trace2]
     layout =go.Layout(title="Boxplot")
     fig = go.Figure(data=data, layout=layout)
-    
-    
+
+
     fig.update_layout(autotypenumbers='convert types')
     #fig.update_layout(yaxis_range=[-4,400])
     #fig.update_yaxes(range = [0,400])
@@ -1212,11 +1212,89 @@ def multipleBoxPlot(request):
 
 
 def multipleLineCharts(request):
-    app= dash.Dash(__name__)
-    
-    df = px.data.gapminder().query("continent == 'Oceania'")
-    fig = px.line(df, x='year', y='lifeExp', color='country', markers=True)
+    db_name = "air"
+    db_host = "localhost"
+    db_username = "root"
+    db_password = "root"
+
+    try:
+        conn=pymysql.connect(host =db_host,
+                            port = int(3306),
+                            user = db_username,
+                            passwd = db_password,
+                            db=db_name)
+    except e:
+            print(e)
+    #Division-Wise daily AQI data visualization using line charts, e.g.
+    df = pd.read_sql_query("SELECT * FROM finaltraindata", conn)
+    df1 = pd.read_sql_query("SELECT * FROM purpleair", conn)
+    df2 = pd.read_sql_query("SELECT * FROM epadaily", conn)
+
+    df['time'] = pd.to_datetime(df['time'])
+    df.PM25 = df.PM25.astype(float)
+
+    df1['daily'] = pd.to_datetime(df1['daily'])
+    df2['daily'] = pd.to_datetime(df2['daily'])
+    newdfDhaka = df.loc[df['division'] =="Dhaka"]
+    newdfDhaka.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    newdfDhakaMean =  newdfDhaka['PM25'].mean()
+    newdfDhaka = df.loc[df['division'] =="Dhaka"]
+    newdfDhaka.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    newdfDhakaMean =  newdfDhaka['PM25'].mean()
+
+    newdf_Rangpur = df.loc[df['division'] =="Rangpur"]
+    newdf_Rangpur.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    newdf_RangpurMean =  newdf_Rangpur['PM25'].mean()
+
+    newdf_Khulna = df.loc[df['division'] =="Khulna"]
+    newdf_Khulna.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    newdf_KhulnaMean =  newdf_Khulna['PM25'].mean()
+
+    newdf_Sylhet = df.loc[df['division'] =="Sylhet"]
+    newdf_Sylhet.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    newdf_SylhetMean =  newdf_Sylhet['PM25'].mean()
+
+    newdf_Rajshahi = df.loc[df['division'] =="Rajshahi"]
+    newdf_Rajshahi.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    newdf_RajshahiMean =  newdf_Rajshahi['PM25'].mean()
+
+    newdf_Barishal = df.loc[df['division'] =="Barishal"]
+    newdf_Barishal.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    newdf_BarishalMean =  newdf_Barishal['PM25'].mean()
+
+    newdf_Chittagong = df.loc[df['division'] =="Chittagong"]
+    newdf_Chittagong.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    newdf_ChittagongMean =  newdf_Chittagong['PM25'].mean()
+
+    newdf_Mymensingh = df.loc[df['division'] =="Mymensingh"]
+    newdf_Mymensingh.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    newdf_MymensinghMean =  newdf_Mymensingh['PM25'].mean()
+
+    allDivisionWisePM25Mean = [newdf_MymensinghMean,newdf_ChittagongMean,newdf_BarishalMean,newdf_RajshahiMean,newdf_SylhetMean,newdf_KhulnaMean,newdf_RangpurMean,newdfDhakaMean]
+
+    allDivision =['Mymensingh','Chittagong','Barishal','Rajshahi','Sylhet','Khulna','Rangpur','Dhaka']
+
+
+
+    fig = px.line( x=allDivision, y=allDivisionWisePM25Mean, markers=True)
+    fig.update_layout(
+        xaxis_title="Division", yaxis_title="AVG PM25"
+    )
     fig.show()
+    pyo.plot(fig)
+
+
+    
+
     return render(request, "graphs/multipleLineCharts.html")
 
 
