@@ -44,6 +44,7 @@ urlpatterns = [
     path('boxPlotOne/', views.boxPlotOne, name='boxPlotOne'),
     path('boxPlotTwo/', views.boxPlotTwo, name='boxPlotTwo'),
     path('boxPlotThree/', views.boxPlotThree, name='boxPlotThree'),
+    path('routeWise/', views.routeWise, name='routeWise'),
     #path('csvUpload/', csvUpload, name='csvUpload'),
     #path('csvUpload/', csvUpload, name='csvUpload')
     

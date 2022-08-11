@@ -1520,3 +1520,8 @@ def boxPlotTwo(request):
 def boxPlotThree(request):
     #Season-Wise time based AQI data visualization using box plot
     return render(request, "graphs/boxPlotThree.html")
+
+
+def routeWise(request):
+    #Season-Wise time based AQI data visualization using box plot
+    return render(request, "graphs/routeWise.html")

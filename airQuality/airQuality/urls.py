@@ -53,6 +53,7 @@ urlpatterns = [
     path('boxPlotOne/', include('graphs.urls')),
     path('boxPlotTwo/', include('graphs.urls')),
     path('boxPlotThree/', include('graphs.urls')),
+    path('routeWise/', include('graphs.urls')),
     
    # path('upload/', include('csvs.upload')),
     
