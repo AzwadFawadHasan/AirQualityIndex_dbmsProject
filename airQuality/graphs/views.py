@@ -1485,6 +1485,13 @@ def boxPlotOne(request):
 def boxPlotTwo(request):
     #Station-Wise AQI data visualization using a box plot, e.g.
 
+    
+
+
+
+
+
+
     db_name = "air"
     db_host = "localhost"
     db_username = "root"
@@ -1493,24 +1500,23 @@ def boxPlotTwo(request):
     try:
 
         conn=pymysql.connect(host =db_host,
-                                port = int(3306),
-                                user = db_username,
-                                passwd = db_password,
-                                db=db_name)
+                            port = int(3306),
+                            user = db_username,
+                            passwd = db_password,
+                            db=db_name)
     except e:
+
 
         print(e)
 
-    
+
 
     df = pd.read_sql_query("SELECT * FROM finaltraindata", conn)
     df1 = pd.read_sql_query("SELECT * FROM epadaily", conn)
     df2 = pd.read_sql_query("SELECT * FROM purpleair", conn)
-
     df['time'] = pd.to_datetime(df['time'])
     df1['daily'] = pd.to_datetime(df1['daily'])
     df2['daily'] = pd.to_datetime(df2['daily'])
-
     #pm25 vs station
     #pm25 vs month (each box plot of different station)
     df['month'] = df['time'].dt.month
@@ -1518,101 +1524,69 @@ def boxPlotTwo(request):
     newdfmonth1.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth1 =  newdfmonth1['PM25'].mean()
-
-
     df['month'] = df['time'].dt.month
     newdfmonth2 = df.loc[df['month'] =="2"]
     newdfmonth2.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth2 =  newdfmonth2['PM25'].mean()
-
-
-
     df['month'] = df['time'].dt.month
     newdfmonth3 = df.loc[df['month'] =="3"]
     newdfmonth3.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth3 =  newdfmonth3['PM25'].mean()
-
-
-
     df['month'] = df['time'].dt.month
     newdfmonth4 = df.loc[df['month'] =="4"]
     newdfmonth4.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth4 =  newdfmonth4['PM25'].mean()
-
-
-
     df['month'] = df['time'].dt.month
     newdfmonth5 = df.loc[df['month'] =="5"]
     newdfmonth5.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth5 =  newdfmonth5['PM25'].mean()
-
-
-
     df['month'] = df['time'].dt.month
     newdfmonth6 = df.loc[df['month'] =="6"]
     newdfmonth6.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth6 =  newdfmonth6['PM25'].mean()
-
-
     df['month'] = df['time'].dt.month
     newdfmonth6 = df.loc[df['month'] =="6"]
     newdfmonth6.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth6 =  newdfmonth6['PM25'].mean()
-
-
-
     df['month'] = df['time'].dt.month
     newdfmonth7 = df.loc[df['month'] =="7"]
     newdfmonth7.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth7 =  newdfmonth7['PM25'].mean()
-
-
-
     df['month'] = df['time'].dt.month
     newdfmonth8 = df.loc[df['month'] =="8"]
     newdfmonth8.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth8 =  newdfmonth8['PM25'].mean()
-
-
     df['month'] = df['time'].dt.month
     newdfmonth9 = df.loc[df['month'] =="9"]
     newdfmonth9.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth9 =  newdfmonth9['PM25'].mean()
-
-
     df['month'] = df['time'].dt.month
     newdfmonth10 = df.loc[df['month'] =="10"]
     newdfmonth10.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth10 =  newdfmonth10['PM25'].mean()
-
-
     df['month'] = df['time'].dt.month
     newdfmonth11 = df.loc[df['month'] =="11"]
     newdfmonth11.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth11 =  newdfmonth11['PM25'].mean()
-
     df['month'] = df['time'].dt.month
     newdfmonth12 = df.loc[df['month'] =="12"]
     newdfmonth12.PM25 = df.PM25.astype(float)
     #newdfDhaka=newdfDhaka['PM25'].astype(float)
     avgPMmonth12 =  newdfmonth12['PM25'].mean()
-
     avgPMmonth12 =  newdfmonth12['PM25'].mean()
-
     month=[1,2,3,4,5,6,7,8,9,10,11,12]
     avgOfallPM25MonthWise = [avgPMmonth1,avgPMmonth2,avgPMmonth3,avgPMmonth4,avgPMmonth5,avgPMmonth6,avgPMmonth7,avgPMmonth8,avgPMmonth9,avgPMmonth10,avgPMmonth11,avgPMmonth12]
-
     pd_new = pd.DataFrame(avgOfallPM25MonthWise) 
     df.loc[df.month == 1, "MonthAverage"] = avgPMmonth1
     df.loc[df.month == 2, "MonthAverage"] = avgPMmonth2
@@ -1620,64 +1594,135 @@ def boxPlotTwo(request):
     df.loc[df.month == 4, "MonthAverage"] = avgPMmonth4
     df.loc[df.month == 5, "MonthAverage"] = avgPMmonth5
     df.loc[df.month == 6, "MonthAverage"] = avgPMmonth6
-
     df.loc[df.month == 7, "MonthAverage"] = avgPMmonth7
     df.loc[df.month == 8, "MonthAverage"] = avgPMmonth8
     df.loc[df.month == 9, "MonthAverage"] = avgPMmonth9
     df.loc[df.month == 10, "MonthAverage"] = avgPMmonth10
     df.loc[df.month == 11, "MonthAverage"] = avgPMmonth11
     df.loc[df.month == 12, "MonthAverage"] = avgPMmonth12
+    dfmonth1 = df.loc[df['month'] == 1]
+    dfmonth2 = df.loc[df['month'] == 2]
+    dfmonth3 = df.loc[df['month'] == 3]
+    dfmonth4 = df.loc[df['month'] == 4]
+    dfmonth5 = df.loc[df['month'] == 5]
+    dfmonth6 = df.loc[df['month'] == 6]
+    dfmonth7 = df.loc[df['month'] == 7]
+    dfmonth8 = df.loc[df['month'] == 8]
+    dfmonth9 = df.loc[df['month'] == 9]
+    dfmonth10 = df.loc[df['month'] == 10]
+    dfmonth11 = df.loc[df['month'] == 11]
+    dfmonth12 = df.loc[df['month'] == 12]
+    
+    dfstation1month1 = dfmonth1.loc[dfmonth1['station']== '1']
+    dfstation1month2 = dfmonth2.loc[dfmonth2['station']== '1']
+    dfstation1month3 = dfmonth3.loc[dfmonth3['station']== '1']
+    dfstation1month4 = dfmonth4.loc[dfmonth4['station']== '1']
+    dfstation1month5 = dfmonth5.loc[dfmonth5['station']== '1']
+    dfstation1month6 = dfmonth6.loc[dfmonth6['station']== '1']
+    dfstation1month7 = dfmonth7.loc[dfmonth7['station']== '1']
+    dfstation1month8 = dfmonth8.loc[dfmonth8['station']== '1']
+    dfstation1month9 = dfmonth9.loc[dfmonth9['station']== '1']
+    dfstation1month10 = dfmonth10.loc[dfmonth10['station']== '1']
+    dfstation1month11 = dfmonth11.loc[dfmonth11['station']== '1']
+    dfstation1month12 = dfmonth12.loc[dfmonth12['station']== '1']
+    dfstation1month2 = dfmonth1.loc[dfmonth1['station']== '2']
+    dfstation1month3 = dfmonth1.loc[dfmonth1['station']== '3']
+    dfstation1month4 = dfmonth1.loc[dfmonth1['station']== '4']
+    dfstation1month4 = dfmonth1.loc[dfmonth1['station']== '5']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # Create figure
     fig = go.Figure()
-    fig.add_trace(go.Box(y=df["PM25"], name=month[0],
-                    ))
-    fig.add_trace(go.Box(y=df["PM25"], name = month[1],
-                    ))
+    fig = go.Figure()
+    fig.add_trace(go.Box(y=dfstation1month1["PM25"], name=month[0],
+                        ))
 
-    fig.add_trace(go.Box(y=df["PM25"], name = month[2],
-                    ))
-
-    fig.add_trace(go.Box(y=df["PM25"], name = month[3],
-                    ))
-    fig.add_trace(go.Box(y=df["PM25"], name = month[4],
-                    ))
-
-    fig.add_trace(go.Box(y=df["PM25"], name = month[5],
-                    ))
-
-    fig.add_trace(go.Box(y=df["PM25"], name = month[6],
-                    ))
-
-    fig.add_trace(go.Box(y=df["PM25"], name = month[7],
-                    ))
-
-    fig.add_trace(go.Box(y=df["PM25"], name = month[8],
-                    ))
-    fig.add_trace(go.Box(y=df["PM25"], name = month[9],
-                    ))
-
-    fig.add_trace(go.Box(y=df["PM25"], name = month[10],
-                    ))
-
-    fig.add_trace(go.Box(y=df["PM25"], name = month[11],
-                    ))
+    fig.add_trace(go.Box(y=dfstation1month2["PM25"], name=month[1],
+                        ))
+    fig.add_trace(go.Box(y=dfstation1month3["PM25"], name=month[2],
+                        ))
+    fig.add_trace(go.Box(y=dfstation1month4["PM25"], name=month[3],
+                        ))
+    fig.add_trace(go.Box(y=dfstation1month5["PM25"], name=month[4],
+                        ))
+    fig.add_trace(go.Box(y=dfstation1month6["PM25"], name=month[5],
+                        ))
+    fig.add_trace(go.Box(y=dfstation1month7["PM25"], name=month[6],
+                        ))
+    fig.add_trace(go.Box(y=dfstation1month8["PM25"], name=month[7],
+                        ))
+    fig.add_trace(go.Box(y=dfstation1month9["PM25"], name=month[8],
+                        ))
+    fig.add_trace(go.Box(y=dfstation1month10["PM25"], name=month[9],
+                        ))
+    fig.add_trace(go.Box(y=dfstation1month11["PM25"], name=month[10],
+                        ))
+    fig.add_trace(go.Box(y=dfstation1month12["PM25"], name=month[11],
+                        ))
 
 
-    layout = go.Layout(legend={'traceorder':'normal'})
-    fig.update_layout(autotypenumbers='convert types')
+    # Add traces
 
-    fig.update_yaxes(autorange=True)
-    fig.update_xaxes(autorange=True)
-    fig.update_layout(title_text="PM25 vs month")
-    fig.update_layout(title_xanchor="auto")
-    fig.update_xaxes(title_text='month')
-    fig.update_yaxes(title_text='PM25')
-    fig.update_layout(title_text="Box plot of monthy recorded PM2.5 concentration")
-    #fig.update_layout(legend_traceorder="reversed")
-    #legendgroup=df.sort_values("station", axis = 0, ascending = True,
-    #                 inplace = True, na_position ='last')
+
+    
+
+
+        
 
 
 
+
+
+
+
+
+
+
+
+
+# Add buttons that add shapes
+    
+
+    fig.update_layout(
+        updatemenus=[
+            dict(
+                buttons=list([
+                    dict(
+                        args=["type", "box"],
+                        label="Scatter Plot",
+                        method="restyle"
+                    ),
+                    dict(
+                        args=["type", "box"],
+                        label="Bar Chart",
+                        method="restyle"
+                    )
+                ]),
+                direction="down",
+            ),
+        ]
+    )
+
+    # Update remaining layout properties
+    fig.update_layout(
+        title_text="Highlight Clusters",
+        showlegend=True,
+    )
 
     fig.show()
 
@@ -1695,7 +1740,58 @@ def boxPlotTwo(request):
 
 
 def boxPlotThree(request):
-    #Season-Wise time based AQI data visualization using box plot
+    import pandas as pd
+    import plotly.express as px
+    import dash
+    import dash_core_components as dcc
+    import dash_html_components as html
+    from dash.dependencies import Input, Output
+
+    app = dash.Dash(__name__)
+
+    data = [['Blue',20],['Red ',12],['Green',33]]
+    df = pd.DataFrame(data,columns=['Color','Number'])
+
+    data1 = [['A',10,88],['B ',50,45],['C',25,120]]
+    df1 = pd.DataFrame(data1,columns=['Letter','Column1','Column2'])
+
+    app.layout = html.Div(children=[
+        html.H1(children='Colors and Letters', style={'text-align': 'center'}),
+        html.Div(children='Color', style={'text-align': 'center'}),
+
+        html.Div([
+            html.Label(['Choose a graph:'],style={'font-weight': 'bold'}),
+            dcc.Dropdown(
+                id='dropdown',
+                options=[
+                    {'label': 'graph1', 'value': 'graph1'},
+                    {'label': 'graph2', 'value': 'graph2'},
+                        ],
+                value='graph1',
+                style={"width": "60%"}),
+
+        html.Div(dcc.Graph(id='graph')),        
+            ]),
+
+    ])
+
+    @app.callback(
+        Output('graph', 'figure'),
+        [Input(component_id='dropdown', component_property='value')]
+    )
+    def select_graph(value):
+        if value == 'graph1':
+            fig = px.bar(df, x=df['Color'], y=df['Number'])
+            return fig
+        else:
+            fig1 = px.line(x=df1['Letter'], y=df1['Column1'], color=px.Constant('Column1'),
+                         labels=dict(x='Letter', y='Column1', color='Letter'))
+            fig1.add_bar(x=df1['Letter'], y=df1['Column2'], name='Letter')
+            return fig1
+
+    if __name__ == '__main__':
+        app.run_server(debug=True)
+        #Season-Wise time based AQI data visualization using box plot
     return render(request, "graphs/boxPlotThree.html")
 
 
