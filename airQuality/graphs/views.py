@@ -1483,6 +1483,214 @@ def boxPlotOne(request):
 
 
 def boxPlotTwo(request):
+    #Station-Wise AQI data visualization using a box plot, e.g.
+
+    db_name = "air"
+    db_host = "localhost"
+    db_username = "root"
+    db_password = "root"
+
+    try:
+
+        conn=pymysql.connect(host =db_host,
+                                port = int(3306),
+                                user = db_username,
+                                passwd = db_password,
+                                db=db_name)
+    except e:
+
+        print(e)
+
+    
+
+    df = pd.read_sql_query("SELECT * FROM finaltraindata", conn)
+    df1 = pd.read_sql_query("SELECT * FROM epadaily", conn)
+    df2 = pd.read_sql_query("SELECT * FROM purpleair", conn)
+
+    df['time'] = pd.to_datetime(df['time'])
+    df1['daily'] = pd.to_datetime(df1['daily'])
+    df2['daily'] = pd.to_datetime(df2['daily'])
+
+    #pm25 vs station
+    #pm25 vs month (each box plot of different station)
+    df['month'] = df['time'].dt.month
+    newdfmonth1 = df.loc[df['month'] =="1"]
+    newdfmonth1.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth1 =  newdfmonth1['PM25'].mean()
+
+
+    df['month'] = df['time'].dt.month
+    newdfmonth2 = df.loc[df['month'] =="2"]
+    newdfmonth2.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth2 =  newdfmonth2['PM25'].mean()
+
+
+
+    df['month'] = df['time'].dt.month
+    newdfmonth3 = df.loc[df['month'] =="3"]
+    newdfmonth3.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth3 =  newdfmonth3['PM25'].mean()
+
+
+
+    df['month'] = df['time'].dt.month
+    newdfmonth4 = df.loc[df['month'] =="4"]
+    newdfmonth4.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth4 =  newdfmonth4['PM25'].mean()
+
+
+
+    df['month'] = df['time'].dt.month
+    newdfmonth5 = df.loc[df['month'] =="5"]
+    newdfmonth5.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth5 =  newdfmonth5['PM25'].mean()
+
+
+
+    df['month'] = df['time'].dt.month
+    newdfmonth6 = df.loc[df['month'] =="6"]
+    newdfmonth6.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth6 =  newdfmonth6['PM25'].mean()
+
+
+    df['month'] = df['time'].dt.month
+    newdfmonth6 = df.loc[df['month'] =="6"]
+    newdfmonth6.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth6 =  newdfmonth6['PM25'].mean()
+
+
+
+    df['month'] = df['time'].dt.month
+    newdfmonth7 = df.loc[df['month'] =="7"]
+    newdfmonth7.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth7 =  newdfmonth7['PM25'].mean()
+
+
+
+    df['month'] = df['time'].dt.month
+    newdfmonth8 = df.loc[df['month'] =="8"]
+    newdfmonth8.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth8 =  newdfmonth8['PM25'].mean()
+
+
+    df['month'] = df['time'].dt.month
+    newdfmonth9 = df.loc[df['month'] =="9"]
+    newdfmonth9.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth9 =  newdfmonth9['PM25'].mean()
+
+
+    df['month'] = df['time'].dt.month
+    newdfmonth10 = df.loc[df['month'] =="10"]
+    newdfmonth10.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth10 =  newdfmonth10['PM25'].mean()
+
+
+    df['month'] = df['time'].dt.month
+    newdfmonth11 = df.loc[df['month'] =="11"]
+    newdfmonth11.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth11 =  newdfmonth11['PM25'].mean()
+
+    df['month'] = df['time'].dt.month
+    newdfmonth12 = df.loc[df['month'] =="12"]
+    newdfmonth12.PM25 = df.PM25.astype(float)
+    #newdfDhaka=newdfDhaka['PM25'].astype(float)
+    avgPMmonth12 =  newdfmonth12['PM25'].mean()
+
+    avgPMmonth12 =  newdfmonth12['PM25'].mean()
+
+    month=[1,2,3,4,5,6,7,8,9,10,11,12]
+    avgOfallPM25MonthWise = [avgPMmonth1,avgPMmonth2,avgPMmonth3,avgPMmonth4,avgPMmonth5,avgPMmonth6,avgPMmonth7,avgPMmonth8,avgPMmonth9,avgPMmonth10,avgPMmonth11,avgPMmonth12]
+
+    pd_new = pd.DataFrame(avgOfallPM25MonthWise) 
+    df.loc[df.month == 1, "MonthAverage"] = avgPMmonth1
+    df.loc[df.month == 2, "MonthAverage"] = avgPMmonth2
+    df.loc[df.month == 3, "MonthAverage"] = avgPMmonth3
+    df.loc[df.month == 4, "MonthAverage"] = avgPMmonth4
+    df.loc[df.month == 5, "MonthAverage"] = avgPMmonth5
+    df.loc[df.month == 6, "MonthAverage"] = avgPMmonth6
+
+    df.loc[df.month == 7, "MonthAverage"] = avgPMmonth7
+    df.loc[df.month == 8, "MonthAverage"] = avgPMmonth8
+    df.loc[df.month == 9, "MonthAverage"] = avgPMmonth9
+    df.loc[df.month == 10, "MonthAverage"] = avgPMmonth10
+    df.loc[df.month == 11, "MonthAverage"] = avgPMmonth11
+    df.loc[df.month == 12, "MonthAverage"] = avgPMmonth12
+    fig = go.Figure()
+    fig.add_trace(go.Box(y=df["PM25"], name=month[0],
+                    ))
+    fig.add_trace(go.Box(y=df["PM25"], name = month[1],
+                    ))
+
+    fig.add_trace(go.Box(y=df["PM25"], name = month[2],
+                    ))
+
+    fig.add_trace(go.Box(y=df["PM25"], name = month[3],
+                    ))
+    fig.add_trace(go.Box(y=df["PM25"], name = month[4],
+                    ))
+
+    fig.add_trace(go.Box(y=df["PM25"], name = month[5],
+                    ))
+
+    fig.add_trace(go.Box(y=df["PM25"], name = month[6],
+                    ))
+
+    fig.add_trace(go.Box(y=df["PM25"], name = month[7],
+                    ))
+
+    fig.add_trace(go.Box(y=df["PM25"], name = month[8],
+                    ))
+    fig.add_trace(go.Box(y=df["PM25"], name = month[9],
+                    ))
+
+    fig.add_trace(go.Box(y=df["PM25"], name = month[10],
+                    ))
+
+    fig.add_trace(go.Box(y=df["PM25"], name = month[11],
+                    ))
+
+
+    layout = go.Layout(legend={'traceorder':'normal'})
+    fig.update_layout(autotypenumbers='convert types')
+
+    fig.update_yaxes(autorange=True)
+    fig.update_xaxes(autorange=True)
+    fig.update_layout(title_text="PM25 vs month")
+    fig.update_layout(title_xanchor="auto")
+    fig.update_xaxes(title_text='month')
+    fig.update_yaxes(title_text='PM25')
+    fig.update_layout(title_text="Box plot of monthy recorded PM2.5 concentration")
+    #fig.update_layout(legend_traceorder="reversed")
+    #legendgroup=df.sort_values("station", axis = 0, ascending = True,
+    #                 inplace = True, na_position ='last')
+
+
+
+
+    fig.show()
+
+
+
+
+
+
+
+
+
+
+
     return render(request, "graphs/boxPlotTwo.html")
 
 
