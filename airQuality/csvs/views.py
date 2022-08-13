@@ -7,6 +7,10 @@ import glob
 from django.core.files.storage import FileSystemStorage
 import os
 import pandas as pd
+from glob import iglob
+import fnmatch
+import os.path
+import glob
 
 #from .forms import CsvModelForm
 #from .models import Csv
@@ -44,6 +48,13 @@ def readfile(filename):
     my_file = pd.read_csv(filename, sep=',', engine='python')
     #my_file = pd.read_csv(filename, sep='[:;,_|#]', engine='python')
     data = pd.DataFrame(data=my_file, index=None)
+    pth = "myfile"
+    print(list(map(path.basename,iglob(pth+"*.mkv"))))
+
+
+    print([path.basename(f) for f in  iglob(pth+"*.mkv")])
+
+    print(filename)
     print(data);
 
 
