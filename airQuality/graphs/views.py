@@ -70,7 +70,20 @@ import plotly.offline as pyo
 import plotly. graph_objs as go
 
 
+import pymysql
+import pandas as pd
+import plotly.graph_objects as go # or 
+import plotly.express as px
 
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import plotly.graph_objects as go # or plotly.express as px
+
+import pymysql
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
 
 
 
@@ -1484,10 +1497,7 @@ def boxPlotOne(request):
 
 def boxPlotTwo(request):
     #Station-Wise AQI data visualization using a box plot, e.g.
-
     
-
-
 
 
 
@@ -1612,7 +1622,7 @@ def boxPlotTwo(request):
     dfmonth10 = df.loc[df['month'] == 10]
     dfmonth11 = df.loc[df['month'] == 11]
     dfmonth12 = df.loc[df['month'] == 12]
-    
+
     dfstation1month1 = dfmonth1.loc[dfmonth1['station']== '1']
     dfstation1month2 = dfmonth2.loc[dfmonth2['station']== '1']
     dfstation1month3 = dfmonth3.loc[dfmonth3['station']== '1']
@@ -1625,118 +1635,828 @@ def boxPlotTwo(request):
     dfstation1month10 = dfmonth10.loc[dfmonth10['station']== '1']
     dfstation1month11 = dfmonth11.loc[dfmonth11['station']== '1']
     dfstation1month12 = dfmonth12.loc[dfmonth12['station']== '1']
-    dfstation1month2 = dfmonth1.loc[dfmonth1['station']== '2']
-    dfstation1month3 = dfmonth1.loc[dfmonth1['station']== '3']
-    dfstation1month4 = dfmonth1.loc[dfmonth1['station']== '4']
-    dfstation1month4 = dfmonth1.loc[dfmonth1['station']== '5']
 
 
 
 
+    dfstation2month1 = dfmonth1.loc[dfmonth1['station']== '2']
+    dfstation2month2 = dfmonth2.loc[dfmonth2['station']== '2']
+    dfstation2month3 = dfmonth3.loc[dfmonth3['station']== '2']
+    dfstation2month4 = dfmonth4.loc[dfmonth4['station']== '2']
+    dfstation2month5 = dfmonth5.loc[dfmonth5['station']== '2']
+    dfstation2month6 = dfmonth6.loc[dfmonth6['station']== '2']
+    dfstation2month7 = dfmonth7.loc[dfmonth7['station']== '2']
+    dfstation2month8 = dfmonth8.loc[dfmonth8['station']== '2']
+    dfstation2month9 = dfmonth9.loc[dfmonth9['station']== '2']
+    dfstation2month10 = dfmonth10.loc[dfmonth10['station']== '2']
+    dfstation2month11 = dfmonth11.loc[dfmonth11['station']== '2']
+    dfstation2month12 = dfmonth12.loc[dfmonth12['station']== '2']
 
 
 
 
+    dfstation3month1 = dfmonth1.loc[dfmonth1['station']== '3']
+    dfstation3month2 = dfmonth2.loc[dfmonth2['station']== '3']
+    dfstation3month3 = dfmonth3.loc[dfmonth3['station']== '3']
+    dfstation3month4 = dfmonth4.loc[dfmonth4['station']== '3']
+    dfstation3month5 = dfmonth5.loc[dfmonth5['station']== '3']
+    dfstation3month6 = dfmonth6.loc[dfmonth6['station']== '3']
+    dfstation3month7 = dfmonth7.loc[dfmonth7['station']== '3']
+    dfstation3month8 = dfmonth8.loc[dfmonth8['station']== '3']
+    dfstation3month9 = dfmonth9.loc[dfmonth9['station']== '3']
+    dfstation3month10 = dfmonth10.loc[dfmonth10['station']== '3']
+    dfstation3month11 = dfmonth11.loc[dfmonth11['station']== '3']
+    dfstation3month12 = dfmonth12.loc[dfmonth12['station']== '3']
 
 
 
+    dfstation4month1 = dfmonth1.loc[dfmonth1['station']== '4']
+    dfstation4month2 = dfmonth2.loc[dfmonth2['station']== '4']
+    dfstation4month3 = dfmonth3.loc[dfmonth3['station']== '4']
+    dfstation4month4 = dfmonth4.loc[dfmonth4['station']== '4']
+    dfstation4month5 = dfmonth5.loc[dfmonth5['station']== '4']
+    dfstation4month6 = dfmonth6.loc[dfmonth6['station']== '4']
+    dfstation4month7 = dfmonth7.loc[dfmonth7['station']== '4']
+    dfstation4month8 = dfmonth8.loc[dfmonth8['station']== '4']
+    dfstation4month9 = dfmonth9.loc[dfmonth9['station']== '4']
+    dfstation4month10 = dfmonth10.loc[dfmonth10['station']== '4']
+    dfstation4month11 = dfmonth11.loc[dfmonth11['station']== '4']
+    dfstation4month12 = dfmonth12.loc[dfmonth12['station']== '4']
+
+    dfstation5month1 = dfmonth1.loc[dfmonth1['station']==    '5']
+    dfstation5month2 = dfmonth2.loc[dfmonth2['station']==    '5']
+    dfstation5month3 = dfmonth3.loc[dfmonth3['station']==    '5']
+    dfstation5month4 = dfmonth4.loc[dfmonth4['station']==    '5']
+    dfstation5month5 = dfmonth5.loc[dfmonth5['station']==    '5']
+    dfstation5month6 = dfmonth6.loc[dfmonth6['station']==    '5']
+    dfstation5month7 = dfmonth7.loc[dfmonth7['station']==    '5']
+    dfstation5month8 = dfmonth8.loc[dfmonth8['station']==    '5']
+    dfstation5month9 = dfmonth9.loc[dfmonth9['station']==    '5']
+    dfstation5month10 = dfmonth10.loc[dfmonth10['station']== '5']
+    dfstation5month11 = dfmonth11.loc[dfmonth11['station']== '5']
+    dfstation5month12 = dfmonth12.loc[dfmonth12['station']== '5']
+
+    dfstation6month1 = dfmonth1.loc[dfmonth1['station']==    '6']
+    dfstation6month2 = dfmonth2.loc[dfmonth2['station']==    '6']
+    dfstation6month3 = dfmonth3.loc[dfmonth3['station']==    '6']
+    dfstation6month4 = dfmonth4.loc[dfmonth4['station']==    '6']
+    dfstation6month5 = dfmonth5.loc[dfmonth5['station']==    '6']
+    dfstation6month6 = dfmonth6.loc[dfmonth6['station']==    '6']
+    dfstation6month7 = dfmonth7.loc[dfmonth7['station']==    '6']
+    dfstation6month8 = dfmonth8.loc[dfmonth8['station']==    '6']
+    dfstation6month9 = dfmonth9.loc[dfmonth9['station']==    '6']
+    dfstation6month10 = dfmonth10.loc[dfmonth10['station']== '6']
+    dfstation6month11 = dfmonth11.loc[dfmonth11['station']== '6']
+    dfstation6month12 = dfmonth12.loc[dfmonth12['station']== '6']
+
+    dfstation7month1 = dfmonth1.loc[dfmonth1['station']==    '7']
+    dfstation7month2 = dfmonth2.loc[dfmonth2['station']==    '7']
+    dfstation7month3 = dfmonth3.loc[dfmonth3['station']==    '7']
+    dfstation7month4 = dfmonth4.loc[dfmonth4['station']==    '7']
+    dfstation7month5 = dfmonth5.loc[dfmonth5['station']==    '7']
+    dfstation7month6 = dfmonth6.loc[dfmonth6['station']==    '7']
+    dfstation7month7 = dfmonth7.loc[dfmonth7['station']==    '7']
+    dfstation7month8 = dfmonth8.loc[dfmonth8['station']==    '7']
+    dfstation7month9 = dfmonth9.loc[dfmonth9['station']==    '7']
+    dfstation7month10 = dfmonth10.loc[dfmonth10['station']== '7']
+    dfstation7month11 = dfmonth11.loc[dfmonth11['station']== '7']
+    dfstation7month12 = dfmonth12.loc[dfmonth12['station']== '7']
+
+    dfstation8month1 = dfmonth1.loc[dfmonth1['station']==    '8']
+    dfstation8month2 = dfmonth2.loc[dfmonth2['station']==    '8']
+    dfstation8month3 = dfmonth3.loc[dfmonth3['station']==    '8']
+    dfstation8month4 = dfmonth4.loc[dfmonth4['station']==    '8']
+    dfstation8month5 = dfmonth5.loc[dfmonth5['station']==    '8']
+    dfstation8month6 = dfmonth6.loc[dfmonth6['station']==    '8']
+    dfstation8month7 = dfmonth7.loc[dfmonth7['station']==    '8']
+    dfstation8month8 = dfmonth8.loc[dfmonth8['station']==    '8']
+    dfstation8month9 = dfmonth9.loc[dfmonth9['station']==    '8']
+    dfstation8month10 = dfmonth10.loc[dfmonth10['station']== '8']
+    dfstation8month11 = dfmonth11.loc[dfmonth11['station']== '8']
+    dfstation8month12 = dfmonth12.loc[dfmonth12['station']== '8']
+
+
+    dfstation9month1 = dfmonth1.loc[dfmonth1['station']==    '9']
+    dfstation9month2 = dfmonth2.loc[dfmonth2['station']==    '9']
+    dfstation9month3 = dfmonth3.loc[dfmonth3['station']==    '9']
+    dfstation9month4 = dfmonth4.loc[dfmonth4['station']==    '9']
+    dfstation9month5 = dfmonth5.loc[dfmonth5['station']==    '9']
+    dfstation9month6 = dfmonth6.loc[dfmonth6['station']==    '9']
+    dfstation9month7 = dfmonth7.loc[dfmonth7['station']==    '9']
+    dfstation9month8 = dfmonth8.loc[dfmonth8['station']==    '9']
+    dfstation9month9 = dfmonth9.loc[dfmonth9['station']==    '9']
+    dfstation9month10 = dfmonth10.loc[dfmonth10['station']== '9']
+    dfstation9month11 = dfmonth11.loc[dfmonth11['station']== '9']
+    dfstation9month12 = dfmonth12.loc[dfmonth12['station']== '9']
+
+    dfstation10month1 = dfmonth1.loc[dfmonth1['station']==    '10']
+    dfstation10month2 = dfmonth2.loc[dfmonth2['station']==    '10']
+    dfstation10month3 = dfmonth3.loc[dfmonth3['station']==    '10']
+    dfstation10month4 = dfmonth4.loc[dfmonth4['station']==    '10']
+    dfstation10month5 = dfmonth5.loc[dfmonth5['station']==    '10']
+    dfstation10month6 = dfmonth6.loc[dfmonth6['station']==    '10']
+    dfstation10month7 = dfmonth7.loc[dfmonth7['station']==    '10']
+    dfstation10month8 = dfmonth8.loc[dfmonth8['station']==    '10']
+    dfstation10month9 = dfmonth9.loc[dfmonth9['station']==    '10']
+    dfstation10month10 = dfmonth10.loc[dfmonth10['station']== '10']
+    dfstation10month11 = dfmonth11.loc[dfmonth11['station']== '10']
+    dfstation10month12 = dfmonth12.loc[dfmonth12['station']== '10']
+
+    dfstation11month1 = dfmonth1.loc[dfmonth1['station']==    '11']
+    dfstation11month2 = dfmonth2.loc[dfmonth2['station']==    '11']
+    dfstation11month3 = dfmonth3.loc[dfmonth3['station']==    '11']
+    dfstation11month4 = dfmonth4.loc[dfmonth4['station']==    '11']
+    dfstation11month5 = dfmonth5.loc[dfmonth5['station']==    '11']
+    dfstation11month6 = dfmonth6.loc[dfmonth6['station']==    '11']
+    dfstation11month7 = dfmonth7.loc[dfmonth7['station']==    '11']
+    dfstation11month8 = dfmonth8.loc[dfmonth8['station']==    '11']
+    dfstation11month9 = dfmonth9.loc[dfmonth9['station']==    '11']
+    dfstation11month10 = dfmonth10.loc[dfmonth10['station']== '11']
+    dfstation11month11 = dfmonth11.loc[dfmonth11['station']== '11']
+    dfstation11month12 = dfmonth12.loc[dfmonth12['station']== '11']
+
+
+    dfstation12month1 = dfmonth1.loc[dfmonth1['station']==    '12']
+    dfstation12month2 = dfmonth2.loc[dfmonth2['station']==    '12']
+    dfstation12month3 = dfmonth3.loc[dfmonth3['station']==    '12']
+    dfstation12month4 = dfmonth4.loc[dfmonth4['station']==    '12']
+    dfstation12month5 = dfmonth5.loc[dfmonth5['station']==    '12']
+    dfstation12month6 = dfmonth6.loc[dfmonth6['station']==    '12']
+    dfstation12month7 = dfmonth7.loc[dfmonth7['station']==    '12']
+    dfstation12month8 = dfmonth8.loc[dfmonth8['station']==    '12']
+    dfstation12month9 = dfmonth9.loc[dfmonth9['station']==    '12']
+    dfstation12month10 = dfmonth10.loc[dfmonth10['station']== '12']
+    dfstation12month11 = dfmonth11.loc[dfmonth11['station']== '12']
+    dfstation12month12 = dfmonth12.loc[dfmonth12['station']== '12']
 
 
 
+    dfstation13month1 = dfmonth1.loc[dfmonth1['station']==    '13']
+    dfstation13month2 = dfmonth2.loc[dfmonth2['station']==    '13']
+    dfstation13month3 = dfmonth3.loc[dfmonth3['station']==    '13']
+    dfstation13month4 = dfmonth4.loc[dfmonth4['station']==    '13']
+    dfstation13month5 = dfmonth5.loc[dfmonth5['station']==    '13']
+    dfstation13month6 = dfmonth6.loc[dfmonth6['station']==    '13']
+    dfstation13month7 = dfmonth7.loc[dfmonth7['station']==    '13']
+    dfstation13month8 = dfmonth8.loc[dfmonth8['station']==    '13']
+    dfstation13month9 = dfmonth9.loc[dfmonth9['station']==    '13']
+    dfstation13month10 = dfmonth10.loc[dfmonth10['station']== '13']
+    dfstation13month11 = dfmonth11.loc[dfmonth11['station']== '13']
+    dfstation13month12 = dfmonth12.loc[dfmonth12['station']== '13']
+
+
+
+    dfstation14month1 = dfmonth1.loc[dfmonth1['station']==    '14']
+    dfstation14month2 = dfmonth2.loc[dfmonth2['station']==    '14']
+    dfstation14month3 = dfmonth3.loc[dfmonth3['station']==    '14']
+    dfstation14month4 = dfmonth4.loc[dfmonth4['station']==    '14']
+    dfstation14month5 = dfmonth5.loc[dfmonth5['station']==    '14']
+    dfstation14month6 = dfmonth6.loc[dfmonth6['station']==    '14']
+    dfstation14month7 = dfmonth7.loc[dfmonth7['station']==    '14']
+    dfstation14month8 = dfmonth8.loc[dfmonth8['station']==    '14']
+    dfstation14month9 = dfmonth9.loc[dfmonth9['station']==    '14']
+    dfstation14month10 = dfmonth10.loc[dfmonth10['station']== '14']
+    dfstation14month11 = dfmonth11.loc[dfmonth11['station']== '14']
+    dfstation14month12 = dfmonth12.loc[dfmonth12['station']== '14']
+
+
+    dfstation15month1 = dfmonth1.loc[dfmonth1['station']==    '15']
+    dfstation15month2 = dfmonth2.loc[dfmonth2['station']==    '15']
+    dfstation15month3 = dfmonth3.loc[dfmonth3['station']==    '15']
+    dfstation15month4 = dfmonth4.loc[dfmonth4['station']==    '15']
+    dfstation15month5 = dfmonth5.loc[dfmonth5['station']==    '15']
+    dfstation15month6 = dfmonth6.loc[dfmonth6['station']==    '15']
+    dfstation15month7 = dfmonth7.loc[dfmonth7['station']==    '15']
+    dfstation15month8 = dfmonth8.loc[dfmonth8['station']==    '15']
+    dfstation15month9 = dfmonth9.loc[dfmonth9['station']==    '15']
+    dfstation15month10 = dfmonth10.loc[dfmonth10['station']== '15']
+    dfstation15month11 = dfmonth11.loc[dfmonth11['station']== '15']
+    dfstation15month12 = dfmonth12.loc[dfmonth12['station']== '15']
+
+
+    dfstation16month1 = dfmonth1.loc[dfmonth1['station']==    '16']
+    dfstation16month2 = dfmonth2.loc[dfmonth2['station']==    '16']
+    dfstation16month3 = dfmonth3.loc[dfmonth3['station']==    '16']
+    dfstation16month4 = dfmonth4.loc[dfmonth4['station']==    '16']
+    dfstation16month5 = dfmonth5.loc[dfmonth5['station']==    '16']
+    dfstation16month6 = dfmonth6.loc[dfmonth6['station']==    '16']
+    dfstation16month7 = dfmonth7.loc[dfmonth7['station']==    '16']
+    dfstation16month8 = dfmonth8.loc[dfmonth8['station']==    '16']
+    dfstation16month9 = dfmonth9.loc[dfmonth9['station']==    '16']
+    dfstation16month10 = dfmonth10.loc[dfmonth10['station']== '16']
+    dfstation16month11 = dfmonth11.loc[dfmonth11['station']== '16']
+    dfstation16month12 = dfmonth12.loc[dfmonth12['station']== '16']
+
+    dfstation17month1 = dfmonth1.loc[dfmonth1['station']==    '17']
+    dfstation17month2 = dfmonth2.loc[dfmonth2['station']==    '17']
+    dfstation17month3 = dfmonth3.loc[dfmonth3['station']==    '17']
+    dfstation17month4 = dfmonth4.loc[dfmonth4['station']==    '17']
+    dfstation17month5 = dfmonth5.loc[dfmonth5['station']==    '17']
+    dfstation17month6 = dfmonth6.loc[dfmonth6['station']==    '17']
+    dfstation17month7 = dfmonth7.loc[dfmonth7['station']==    '17']
+    dfstation17month8 = dfmonth8.loc[dfmonth8['station']==    '17']
+    dfstation17month9 = dfmonth9.loc[dfmonth9['station']==    '17']
+    dfstation17month10 = dfmonth10.loc[dfmonth10['station']== '17']
+    dfstation17month11 = dfmonth11.loc[dfmonth11['station']== '17']
+    dfstation17month12 = dfmonth12.loc[dfmonth12['station']== '17']
+
+    dfstation18month1 = dfmonth1.loc[dfmonth1['station']==    '18']
+    dfstation18month2 = dfmonth2.loc[dfmonth2['station']==    '18']
+    dfstation18month3 = dfmonth3.loc[dfmonth3['station']==    '18']
+    dfstation18month4 = dfmonth4.loc[dfmonth4['station']==    '18']
+    dfstation18month5 = dfmonth5.loc[dfmonth5['station']==    '18']
+    dfstation18month6 = dfmonth6.loc[dfmonth6['station']==    '18']
+    dfstation18month7 = dfmonth7.loc[dfmonth7['station']==    '18']
+    dfstation18month8 = dfmonth8.loc[dfmonth8['station']==    '18']
+    dfstation18month9 = dfmonth9.loc[dfmonth9['station']==    '18']
+    dfstation18month10 = dfmonth10.loc[dfmonth10['station']== '18']
+    dfstation18month11 = dfmonth11.loc[dfmonth11['station']== '18']
+    dfstation18month12 = dfmonth12.loc[dfmonth12['station']== '18']
+
+    dfstation19month1 = dfmonth1.loc[dfmonth1['station']==    '19']
+    dfstation19month2 = dfmonth2.loc[dfmonth2['station']==    '19']
+    dfstation19month3 = dfmonth3.loc[dfmonth3['station']==    '19']
+    dfstation19month4 = dfmonth4.loc[dfmonth4['station']==    '19']
+    dfstation19month5 = dfmonth5.loc[dfmonth5['station']==    '19']
+    dfstation19month6 = dfmonth6.loc[dfmonth6['station']==    '19']
+    dfstation19month7 = dfmonth7.loc[dfmonth7['station']==    '19']
+    dfstation19month8 = dfmonth8.loc[dfmonth8['station']==    '19']
+    dfstation19month9 = dfmonth9.loc[dfmonth9['station']==    '19']
+    dfstation19month10 = dfmonth10.loc[dfmonth10['station']== '19']
+    dfstation19month11 = dfmonth11.loc[dfmonth11['station']== '19']
+    dfstation19month12 = dfmonth12.loc[dfmonth12['station']== '19']
+
+    dfstation20month1 = dfmonth1.loc[dfmonth1['station']==    '20']
+    dfstation20month2 = dfmonth2.loc[dfmonth2['station']==    '20']
+    dfstation20month3 = dfmonth3.loc[dfmonth3['station']==    '20']
+    dfstation20month4 = dfmonth4.loc[dfmonth4['station']==    '20']
+    dfstation20month5 = dfmonth5.loc[dfmonth5['station']==    '20']
+    dfstation20month6 = dfmonth6.loc[dfmonth6['station']==    '20']
+    dfstation20month7 = dfmonth7.loc[dfmonth7['station']==    '20']
+    dfstation20month8 = dfmonth8.loc[dfmonth8['station']==    '20']
+    dfstation20month9 = dfmonth9.loc[dfmonth9['station']==    '20']
+    dfstation20month10 = dfmonth10.loc[dfmonth10['station']== '20']
+    dfstation20month11 = dfmonth11.loc[dfmonth11['station']== '20']
+    dfstation20month12 = dfmonth12.loc[dfmonth12['station']== '20']
+
+
+    dfstation21month1 = dfmonth1.loc[dfmonth1['station']==    '21']
+    dfstation21month2 = dfmonth2.loc[dfmonth2['station']==    '21']
+    dfstation21month3 = dfmonth3.loc[dfmonth3['station']==    '21']
+    dfstation21month4 = dfmonth4.loc[dfmonth4['station']==    '21']
+    dfstation21month5 = dfmonth5.loc[dfmonth5['station']==    '21']
+    dfstation21month6 = dfmonth6.loc[dfmonth6['station']==    '21']
+    dfstation21month7 = dfmonth7.loc[dfmonth7['station']==    '21']
+    dfstation21month8 = dfmonth8.loc[dfmonth8['station']==    '21']
+    dfstation21month9 = dfmonth9.loc[dfmonth9['station']==    '21']
+    dfstation21month10 = dfmonth10.loc[dfmonth10['station']== '21']
+    dfstation21month11 = dfmonth11.loc[dfmonth11['station']== '21']
+    dfstation21month12 = dfmonth12.loc[dfmonth12['station']== '21']
+
+
+    dfstation22month1 = dfmonth1.loc[dfmonth1['station']==    '22']
+    dfstation22month2 = dfmonth2.loc[dfmonth2['station']==    '22']
+    dfstation22month3 = dfmonth3.loc[dfmonth3['station']==    '22']
+    dfstation22month4 = dfmonth4.loc[dfmonth4['station']==    '22']
+    dfstation22month5 = dfmonth5.loc[dfmonth5['station']==    '22']
+    dfstation22month6 = dfmonth6.loc[dfmonth6['station']==    '22']
+    dfstation22month7 = dfmonth7.loc[dfmonth7['station']==    '22']
+    dfstation22month8 = dfmonth8.loc[dfmonth8['station']==    '22']
+    dfstation22month9 = dfmonth9.loc[dfmonth9['station']==    '22']
+    dfstation22month10 = dfmonth10.loc[dfmonth10['station']== '22']
+    dfstation22month11 = dfmonth11.loc[dfmonth11['station']== '22']
+    dfstation22month12 = dfmonth12.loc[dfmonth12['station']== '22']
+
+    dfstation23month1 = dfmonth1.loc[dfmonth1['station']==    '23']
+    dfstation23month2 = dfmonth2.loc[dfmonth2['station']==    '23']
+    dfstation23month3 = dfmonth3.loc[dfmonth3['station']==    '23']
+    dfstation23month4 = dfmonth4.loc[dfmonth4['station']==    '23']
+    dfstation23month5 = dfmonth5.loc[dfmonth5['station']==    '23']
+    dfstation23month6 = dfmonth6.loc[dfmonth6['station']==    '23']
+    dfstation23month7 = dfmonth7.loc[dfmonth7['station']==    '23']
+    dfstation23month8 = dfmonth8.loc[dfmonth8['station']==    '23']
+    dfstation23month9 = dfmonth9.loc[dfmonth9['station']==    '23']
+    dfstation23month10 = dfmonth10.loc[dfmonth10['station']== '23']
+    dfstation23month11 = dfmonth11.loc[dfmonth11['station']== '23']
+    dfstation23month12 = dfmonth12.loc[dfmonth12['station']== '23']
 
 
 
     # Create figure
-    fig = go.Figure()
-    fig = go.Figure()
-    fig.add_trace(go.Box(y=dfstation1month1["PM25"], name=month[0],
+
+    fig1 = go.Figure()
+    fig1.add_trace(go.Box(y=dfstation1month1["PM25"], name=month[0],
+                       ))
+
+    fig1.add_trace(go.Box(y=dfstation1month2["PM25"], name=month[1],
+                        ))
+    fig1.add_trace(go.Box(y=dfstation1month3["PM25"], name=month[2],
+                        ))
+    fig1.add_trace(go.Box(y=dfstation1month4["PM25"], name=month[3],
+                        ))
+    fig1.add_trace(go.Box(y=dfstation1month5["PM25"], name=month[4],
+                        ))
+    fig1.add_trace(go.Box(y=dfstation1month6["PM25"], name=month[5],
+                        ))
+    fig1.add_trace(go.Box(y=dfstation1month7["PM25"], name=month[6],
+                        ))
+    fig1.add_trace(go.Box(y=dfstation1month8["PM25"], name=month[7],
+                        ))
+    fig1.add_trace(go.Box(y=dfstation1month9["PM25"], name=month[8],
+                        ))
+    fig1.add_trace(go.Box(y=dfstation1month10["PM25"], name=month[9],
+                        ))
+    fig1.add_trace(go.Box(y=dfstation1month11["PM25"], name=month[10],
+                        ))
+    fig1.add_trace(go.Box(y=dfstation1month12["PM25"], name=month[11],
                         ))
 
-    fig.add_trace(go.Box(y=dfstation1month2["PM25"], name=month[1],
-                        ))
-    fig.add_trace(go.Box(y=dfstation1month3["PM25"], name=month[2],
-                        ))
-    fig.add_trace(go.Box(y=dfstation1month4["PM25"], name=month[3],
-                        ))
-    fig.add_trace(go.Box(y=dfstation1month5["PM25"], name=month[4],
-                        ))
-    fig.add_trace(go.Box(y=dfstation1month6["PM25"], name=month[5],
-                        ))
-    fig.add_trace(go.Box(y=dfstation1month7["PM25"], name=month[6],
-                        ))
-    fig.add_trace(go.Box(y=dfstation1month8["PM25"], name=month[7],
-                        ))
-    fig.add_trace(go.Box(y=dfstation1month9["PM25"], name=month[8],
-                        ))
-    fig.add_trace(go.Box(y=dfstation1month10["PM25"], name=month[9],
-                        ))
-    fig.add_trace(go.Box(y=dfstation1month11["PM25"], name=month[10],
-                        ))
-    fig.add_trace(go.Box(y=dfstation1month12["PM25"], name=month[11],
-                        ))
 
-
-    # Add traces
-
-
-    
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-# Add buttons that add shapes
-    
-
-    fig.update_layout(
-        updatemenus=[
-            dict(
-                buttons=list([
-                    dict(
-                        args=["type", "box"],
-                        label="Scatter Plot",
-                        method="restyle"
-                    ),
-                    dict(
-                        args=["type", "box"],
-                        label="Bar Chart",
-                        method="restyle"
-                    )
-                ]),
-                direction="down",
-            ),
-        ]
+    fig1.update_layout(
+        title_text="for station 1",
+        xaxis_title="month", yaxis_title="PM2.5",
+        showlegend=True,autotypenumbers='convert types'
     )
 
-    # Update remaining layout properties
-    fig.update_layout(
-        title_text="Highlight Clusters",
+
+
+
+
+    fig2 = go.Figure()
+    fig2.add_trace(go.Box(y=dfstation2month1["PM25"], name=month[0],
+                      ))
+
+    fig2.add_trace(go.Box(y=dfstation2month2["PM25"], name=month[1],
+                        ))
+    fig2.add_trace(go.Box(y=dfstation2month3["PM25"], name=month[2],
+                        ))
+    fig2.add_trace(go.Box(y=dfstation2month4["PM25"], name=month[3],
+                        ))
+    fig2.add_trace(go.Box(y=dfstation2month5["PM25"], name=month[4],
+                        ))
+    fig2.add_trace(go.Box(y=dfstation2month6["PM25"], name=month[5],
+                        ))
+    fig2.add_trace(go.Box(y=dfstation2month7["PM25"], name=month[6],
+                        ))
+    fig2.add_trace(go.Box(y=dfstation2month8["PM25"], name=month[7],
+                        ))
+    fig2.add_trace(go.Box(y=dfstation2month9["PM25"], name=month[8],
+                        ))
+    fig2.add_trace(go.Box(y=dfstation2month10["PM25"], name=month[9],
+                        ))
+    fig2.add_trace(go.Box(y=dfstation2month11["PM25"], name=month[10],
+                        ))
+    fig2.add_trace(go.Box(y=dfstation2month12["PM25"], name=month[11],
+                        ))
+
+
+    fig2.update_layout(
+        title_text="for station 2",
         showlegend=True,
+        xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types'
     )
 
-    fig.show()
+
+
+    fig3 = go.Figure()
+    fig3.add_trace(go.Box(y=dfstation3month1["PM25"], name=month[0],
+                      ))
+
+    fig3.add_trace(go.Box(y=dfstation3month2["PM25"], name=month[1],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month3["PM25"], name=month[2],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month4["PM25"], name=month[3],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month5["PM25"], name=month[4],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month6["PM25"], name=month[5],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month7["PM25"], name=month[6],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month8["PM25"], name=month[7],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month9["PM25"], name=month[8],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month10["PM25"], name=month[9],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month11["PM25"], name=month[10],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month12["PM25"], name=month[11],
+                        ))
+
+
+    fig3.update_layout(
+        title_text="for station 3",
+        showlegend=True,
+        xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types'
+    )
 
 
 
 
 
+    fig4 = go.Figure()
+    fig4.add_trace(go.Box(y=dfstation4month1["PM25"], name=month[0],
+                      ))
+
+    fig4.add_trace(go.Box(y=dfstation4month2["PM25"], name=month[1],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month3["PM25"], name=month[2],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month4["PM25"], name=month[3],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month5["PM25"], name=month[4],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month6["PM25"], name=month[5],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month7["PM25"], name=month[6],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month8["PM25"], name=month[7],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month9["PM25"], name=month[8],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month10["PM25"], name=month[9],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month11["PM25"], name=month[10],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month12["PM25"], name=month[11],
+                        ))
+
+    fig4.update_layout(
+        title_text="for station 4",
+        showlegend=True,
+        xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types'
+    )
 
 
 
 
 
+    fig5 = go.Figure()
+    fig5.add_trace(go.Box(y=dfstation5month1["PM25"], name=month[0],))
+    fig5.add_trace(go.Box(y=dfstation5month2["PM25"], name=month[1],))
+    fig5.add_trace(go.Box(y=dfstation5month3["PM25"], name=month[2],))
+    fig5.add_trace(go.Box(y=dfstation5month4["PM25"], name=month[3],))
+    fig5.add_trace(go.Box(y=dfstation5month5["PM25"], name=month[4],))
+    fig5.add_trace(go.Box(y=dfstation5month6["PM25"], name=month[5],))
+    fig5.add_trace(go.Box(y=dfstation5month7["PM25"], name=month[6],))
+    fig5.add_trace(go.Box(y=dfstation5month8["PM25"], name=month[7],))
+    fig5.add_trace(go.Box(y=dfstation5month9["PM25"], name=month[8],))
+    fig5.add_trace(go.Box(y=dfstation5month10["PM25"], name=month[9],))
+    fig5.add_trace(go.Box(y=dfstation5month11["PM25"], name=month[10],))
+    fig5.add_trace(go.Box(y=dfstation5month12["PM25"], name=month[11],))
+    fig5.update_layout(title_text="for station 5",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
 
-    return render(request, "graphs/boxPlotTwo.html")
+
+    fig6 = go.Figure()
+    fig6.add_trace(go.Box(y=dfstation6month1["PM25"], name=month[0],))
+    fig6.add_trace(go.Box(y=dfstation6month2["PM25"], name=month[1],))
+    fig6.add_trace(go.Box(y=dfstation6month3["PM25"], name=month[2],))
+    fig6.add_trace(go.Box(y=dfstation6month4["PM25"], name=month[3],))
+    fig6.add_trace(go.Box(y=dfstation6month5["PM25"], name=month[4],))
+    fig6.add_trace(go.Box(y=dfstation6month6["PM25"], name=month[5],))
+    fig6.add_trace(go.Box(y=dfstation6month7["PM25"], name=month[6],))
+    fig6.add_trace(go.Box(y=dfstation6month8["PM25"], name=month[7],))
+    fig6.add_trace(go.Box(y=dfstation6month9["PM25"], name=month[8],))
+    fig6.add_trace(go.Box(y=dfstation6month10["PM25"], name=month[9],))
+    fig6.add_trace(go.Box(y=dfstation6month11["PM25"], name=month[10],))
+    fig6.add_trace(go.Box(y=dfstation6month12["PM25"], name=month[11],))
+    fig6.update_layout(title_text="for station 6",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig7 = go.Figure()
+    fig7.add_trace(go.Box(y=dfstation7month1["PM25"], name=month[0],))
+    fig7.add_trace(go.Box(y=dfstation7month2["PM25"], name=month[1],))
+    fig7.add_trace(go.Box(y=dfstation7month3["PM25"], name=month[2],))
+    fig7.add_trace(go.Box(y=dfstation7month4["PM25"], name=month[3],))
+    fig7.add_trace(go.Box(y=dfstation7month5["PM25"], name=month[4],))
+    fig7.add_trace(go.Box(y=dfstation7month6["PM25"], name=month[5],))
+    fig7.add_trace(go.Box(y=dfstation7month7["PM25"], name=month[6],))
+    fig7.add_trace(go.Box(y=dfstation7month8["PM25"], name=month[7],))
+    fig7.add_trace(go.Box(y=dfstation7month9["PM25"], name=month[8],))
+    fig7.add_trace(go.Box(y=dfstation7month10["PM25"], name=month[9],))
+    fig7.add_trace(go.Box(y=dfstation7month11["PM25"], name=month[10],))
+    fig7.add_trace(go.Box(y=dfstation7month12["PM25"], name=month[11],))
+    fig7.update_layout(title_text="for station 7",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig8 = go.Figure()
+    fig8.add_trace(go.Box(y=dfstation8month1["PM25"], name=month[0],))
+    fig8.add_trace(go.Box(y=dfstation8month2["PM25"], name=month[1],))
+    fig8.add_trace(go.Box(y=dfstation8month3["PM25"], name=month[2],))
+    fig8.add_trace(go.Box(y=dfstation8month4["PM25"], name=month[3],))
+    fig8.add_trace(go.Box(y=dfstation8month5["PM25"], name=month[4],))
+    fig8.add_trace(go.Box(y=dfstation8month6["PM25"], name=month[5],))
+    fig8.add_trace(go.Box(y=dfstation8month7["PM25"], name=month[6],))
+    fig8.add_trace(go.Box(y=dfstation8month8["PM25"], name=month[7],))
+    fig8.add_trace(go.Box(y=dfstation8month9["PM25"], name=month[8],))
+    fig8.add_trace(go.Box(y=dfstation8month10["PM25"], name=month[9],))
+    fig8.add_trace(go.Box(y=dfstation8month11["PM25"], name=month[10],))
+    fig8.add_trace(go.Box(y=dfstation8month12["PM25"], name=month[11],))
+    fig8.update_layout(title_text="for station 8",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+
+    fig9 = go.Figure()
+    fig9.add_trace(go.Box(y=dfstation9month1["PM25"], name=month[0],))
+    fig9.add_trace(go.Box(y=dfstation9month2["PM25"], name=month[1],))
+    fig9.add_trace(go.Box(y=dfstation9month3["PM25"], name=month[2],))
+    fig9.add_trace(go.Box(y=dfstation9month4["PM25"], name=month[3],))
+    fig9.add_trace(go.Box(y=dfstation9month5["PM25"], name=month[4],))
+    fig9.add_trace(go.Box(y=dfstation9month6["PM25"], name=month[5],))
+    fig9.add_trace(go.Box(y=dfstation9month7["PM25"], name=month[6],))
+    fig9.add_trace(go.Box(y=dfstation9month8["PM25"], name=month[7],))
+    fig9.add_trace(go.Box(y=dfstation9month9["PM25"], name=month[8],))
+    fig9.add_trace(go.Box(y=dfstation9month10["PM25"], name=month[9],))
+    fig9.add_trace(go.Box(y=dfstation9month11["PM25"], name=month[10],))
+    fig9.add_trace(go.Box(y=dfstation9month12["PM25"], name=month[11],))
+    fig9.update_layout(title_text="for station 9",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig10 = go.Figure()
+    fig10.add_trace(go.Box(y=dfstation10month1["PM25"], name=month[0],))
+    fig10.add_trace(go.Box(y=dfstation10month2["PM25"], name=month[1],))
+    fig10.add_trace(go.Box(y=dfstation10month3["PM25"], name=month[2],))
+    fig10.add_trace(go.Box(y=dfstation10month4["PM25"], name=month[3],))
+    fig10.add_trace(go.Box(y=dfstation10month5["PM25"], name=month[4],))
+    fig10.add_trace(go.Box(y=dfstation10month6["PM25"], name=month[5],))
+    fig10.add_trace(go.Box(y=dfstation10month7["PM25"], name=month[6],))
+    fig10.add_trace(go.Box(y=dfstation10month8["PM25"], name=month[7],))
+    fig10.add_trace(go.Box(y=dfstation10month9["PM25"], name=month[8],))
+    fig10.add_trace(go.Box(y=dfstation10month10["PM25"], name=month[9],))
+    fig10.add_trace(go.Box(y=dfstation10month11["PM25"], name=month[10],))
+    fig10.add_trace(go.Box(y=dfstation10month12["PM25"], name=month[11],))
+    fig10.update_layout(title_text="for station 10",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig11 = go.Figure()
+    fig11.add_trace(go.Box(y=dfstation11month1["PM25"], name=month[0],))
+    fig11.add_trace(go.Box(y=dfstation11month2["PM25"], name=month[1],))
+    fig11.add_trace(go.Box(y=dfstation11month3["PM25"], name=month[2],))
+    fig11.add_trace(go.Box(y=dfstation11month4["PM25"], name=month[3],))
+    fig11.add_trace(go.Box(y=dfstation11month5["PM25"], name=month[4],))
+    fig11.add_trace(go.Box(y=dfstation11month6["PM25"], name=month[5],))
+    fig11.add_trace(go.Box(y=dfstation11month7["PM25"], name=month[6],))
+    fig11.add_trace(go.Box(y=dfstation11month8["PM25"], name=month[7],))
+    fig11.add_trace(go.Box(y=dfstation11month9["PM25"], name=month[8],))
+    fig11.add_trace(go.Box(y=dfstation11month10["PM25"], name=month[9],))
+    fig11.add_trace(go.Box(y=dfstation11month11["PM25"], name=month[10],))
+    fig11.add_trace(go.Box(y=dfstation11month12["PM25"], name=month[11],))
+    fig11.update_layout(title_text="for station 11",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig12 = go.Figure()
+    fig12.add_trace(go.Box(y=dfstation12month1["PM25"], name=month[0],))
+    fig12.add_trace(go.Box(y=dfstation12month2["PM25"], name=month[1],))
+    fig12.add_trace(go.Box(y=dfstation12month3["PM25"], name=month[2],))
+    fig12.add_trace(go.Box(y=dfstation12month4["PM25"], name=month[3],))
+    fig12.add_trace(go.Box(y=dfstation12month5["PM25"], name=month[4],))
+    fig12.add_trace(go.Box(y=dfstation12month6["PM25"], name=month[5],))
+    fig12.add_trace(go.Box(y=dfstation12month7["PM25"], name=month[6],))
+    fig12.add_trace(go.Box(y=dfstation12month8["PM25"], name=month[7],))
+    fig12.add_trace(go.Box(y=dfstation12month9["PM25"], name=month[8],))
+    fig12.add_trace(go.Box(y=dfstation12month10["PM25"], name=month[9],))
+    fig12.add_trace(go.Box(y=dfstation12month11["PM25"], name=month[10],))
+    fig12.add_trace(go.Box(y=dfstation12month12["PM25"], name=month[11],))
+    fig12.update_layout(title_text="for station 12",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig13 = go.Figure()
+    fig13.add_trace(go.Box(y=dfstation13month1["PM25"], name=month[0],))
+    fig13.add_trace(go.Box(y=dfstation13month2["PM25"], name=month[1],))
+    fig13.add_trace(go.Box(y=dfstation13month3["PM25"], name=month[2],))
+    fig13.add_trace(go.Box(y=dfstation13month4["PM25"], name=month[3],))
+    fig13.add_trace(go.Box(y=dfstation13month5["PM25"], name=month[4],))
+    fig13.add_trace(go.Box(y=dfstation13month6["PM25"], name=month[5],))
+    fig13.add_trace(go.Box(y=dfstation13month7["PM25"], name=month[6],))
+    fig13.add_trace(go.Box(y=dfstation13month8["PM25"], name=month[7],))
+    fig13.add_trace(go.Box(y=dfstation13month9["PM25"], name=month[8],))
+    fig13.add_trace(go.Box(y=dfstation13month10["PM25"], name=month[9],))
+    fig13.add_trace(go.Box(y=dfstation13month11["PM25"], name=month[10],))
+    fig13.add_trace(go.Box(y=dfstation13month12["PM25"], name=month[11],))
+    fig13.update_layout(title_text="for station 13",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig14 = go.Figure()
+    fig14.add_trace(go.Box(y=dfstation14month1["PM25"], name=month[0],))
+    fig14.add_trace(go.Box(y=dfstation14month2["PM25"], name=month[1],))
+    fig14.add_trace(go.Box(y=dfstation14month3["PM25"], name=month[2],))
+    fig14.add_trace(go.Box(y=dfstation14month4["PM25"], name=month[3],))
+    fig14.add_trace(go.Box(y=dfstation14month5["PM25"], name=month[4],))
+    fig14.add_trace(go.Box(y=dfstation14month6["PM25"], name=month[5],))
+    fig14.add_trace(go.Box(y=dfstation14month7["PM25"], name=month[6],))
+    fig14.add_trace(go.Box(y=dfstation14month8["PM25"], name=month[7],))
+    fig14.add_trace(go.Box(y=dfstation14month9["PM25"], name=month[8],))
+    fig14.add_trace(go.Box(y=dfstation14month10["PM25"], name=month[9],))
+    fig14.add_trace(go.Box(y=dfstation14month11["PM25"], name=month[10],))
+    fig14.add_trace(go.Box(y=dfstation14month12["PM25"], name=month[11],))
+    fig14.update_layout(title_text="for station 14",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig15 = go.Figure()
+    fig15.add_trace(go.Box(y=dfstation15month1["PM25"], name=month[0],))
+    fig15.add_trace(go.Box(y=dfstation15month2["PM25"], name=month[1],))
+    fig15.add_trace(go.Box(y=dfstation15month3["PM25"], name=month[2],))
+    fig15.add_trace(go.Box(y=dfstation15month4["PM25"], name=month[3],))
+    fig15.add_trace(go.Box(y=dfstation15month5["PM25"], name=month[4],))
+    fig15.add_trace(go.Box(y=dfstation15month6["PM25"], name=month[5],))
+    fig15.add_trace(go.Box(y=dfstation15month7["PM25"], name=month[6],))
+    fig15.add_trace(go.Box(y=dfstation15month8["PM25"], name=month[7],))
+    fig15.add_trace(go.Box(y=dfstation15month9["PM25"], name=month[8],))
+    fig15.add_trace(go.Box(y=dfstation15month10["PM25"], name=month[9],))
+    fig15.add_trace(go.Box(y=dfstation15month11["PM25"], name=month[10],))
+    fig15.add_trace(go.Box(y=dfstation15month12["PM25"], name=month[11],))
+    fig15.update_layout(title_text="for station 15",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig16 = go.Figure()
+    fig16.add_trace(go.Box(y=dfstation16month1["PM25"], name=month[0],))
+    fig16.add_trace(go.Box(y=dfstation16month2["PM25"], name=month[1],))
+    fig16.add_trace(go.Box(y=dfstation16month3["PM25"], name=month[2],))
+    fig16.add_trace(go.Box(y=dfstation16month4["PM25"], name=month[3],))
+    fig16.add_trace(go.Box(y=dfstation16month5["PM25"], name=month[4],))
+    fig16.add_trace(go.Box(y=dfstation16month6["PM25"], name=month[5],))
+    fig16.add_trace(go.Box(y=dfstation16month7["PM25"], name=month[6],))
+    fig16.add_trace(go.Box(y=dfstation16month8["PM25"], name=month[7],))
+    fig16.add_trace(go.Box(y=dfstation16month9["PM25"], name=month[8],))
+    fig16.add_trace(go.Box(y=dfstation16month10["PM25"], name=month[9],))
+    fig16.add_trace(go.Box(y=dfstation16month11["PM25"], name=month[10],))
+    fig16.add_trace(go.Box(y=dfstation16month12["PM25"], name=month[11],))
+    fig16.update_layout(title_text="for station 16",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+
+    fig17 = go.Figure()
+    fig17.add_trace(go.Box(y=dfstation17month1["PM25"], name=month[0],))
+    fig17.add_trace(go.Box(y=dfstation17month2["PM25"], name=month[1],))
+    fig17.add_trace(go.Box(y=dfstation17month3["PM25"], name=month[2],))
+    fig17.add_trace(go.Box(y=dfstation17month4["PM25"], name=month[3],))
+    fig17.add_trace(go.Box(y=dfstation17month5["PM25"], name=month[4],))
+    fig17.add_trace(go.Box(y=dfstation17month6["PM25"], name=month[5],))
+    fig17.add_trace(go.Box(y=dfstation17month7["PM25"], name=month[6],))
+    fig17.add_trace(go.Box(y=dfstation17month8["PM25"], name=month[7],))
+    fig17.add_trace(go.Box(y=dfstation17month9["PM25"], name=month[8],))
+    fig17.add_trace(go.Box(y=dfstation17month10["PM25"], name=month[9],))
+    fig17.add_trace(go.Box(y=dfstation17month11["PM25"], name=month[10],))
+    fig17.add_trace(go.Box(y=dfstation17month12["PM25"], name=month[11],))
+    fig17.update_layout(title_text="for station 17",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+
+    fig18 = go.Figure()
+    fig18.add_trace(go.Box(y=dfstation18month1["PM25"], name=month[0],))
+    fig18.add_trace(go.Box(y=dfstation18month2["PM25"], name=month[1],))
+    fig18.add_trace(go.Box(y=dfstation18month3["PM25"], name=month[2],))
+    fig18.add_trace(go.Box(y=dfstation18month4["PM25"], name=month[3],))
+    fig18.add_trace(go.Box(y=dfstation18month5["PM25"], name=month[4],))
+    fig18.add_trace(go.Box(y=dfstation18month6["PM25"], name=month[5],))
+    fig18.add_trace(go.Box(y=dfstation18month7["PM25"], name=month[6],))
+    fig18.add_trace(go.Box(y=dfstation18month8["PM25"], name=month[7],))
+    fig18.add_trace(go.Box(y=dfstation18month9["PM25"], name=month[8],))
+    fig18.add_trace(go.Box(y=dfstation18month10["PM25"], name=month[9],))
+    fig18.add_trace(go.Box(y=dfstation18month11["PM25"], name=month[10],))
+    fig18.add_trace(go.Box(y=dfstation18month12["PM25"], name=month[11],))
+    fig18.update_layout(title_text="for station 18",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig19 = go.Figure()
+    fig19.add_trace(go.Box(y=dfstation19month1["PM25"], name=month[0],))
+    fig19.add_trace(go.Box(y=dfstation19month2["PM25"], name=month[1],))
+    fig19.add_trace(go.Box(y=dfstation19month3["PM25"], name=month[2],))
+    fig19.add_trace(go.Box(y=dfstation19month4["PM25"], name=month[3],))
+    fig19.add_trace(go.Box(y=dfstation19month5["PM25"], name=month[4],))
+    fig19.add_trace(go.Box(y=dfstation19month6["PM25"], name=month[5],))
+    fig19.add_trace(go.Box(y=dfstation19month7["PM25"], name=month[6],))
+    fig19.add_trace(go.Box(y=dfstation19month8["PM25"], name=month[7],))
+    fig19.add_trace(go.Box(y=dfstation19month9["PM25"], name=month[8],))
+    fig19.add_trace(go.Box(y=dfstation19month10["PM25"], name=month[9],))
+    fig19.add_trace(go.Box(y=dfstation19month11["PM25"], name=month[10],))
+    fig19.add_trace(go.Box(y=dfstation19month12["PM25"], name=month[11],))
+    fig19.update_layout(title_text="for station 19",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig20 = go.Figure()
+    fig20.add_trace(go.Box(y=dfstation20month1["PM25"], name=month[0],))
+    fig20.add_trace(go.Box(y=dfstation20month2["PM25"], name=month[1],))
+    fig20.add_trace(go.Box(y=dfstation20month3["PM25"], name=month[2],))
+    fig20.add_trace(go.Box(y=dfstation20month4["PM25"], name=month[3],))
+    fig20.add_trace(go.Box(y=dfstation20month5["PM25"], name=month[4],))
+    fig20.add_trace(go.Box(y=dfstation20month6["PM25"], name=month[5],))
+    fig20.add_trace(go.Box(y=dfstation20month7["PM25"], name=month[6],))
+    fig20.add_trace(go.Box(y=dfstation20month8["PM25"], name=month[7],))
+    fig20.add_trace(go.Box(y=dfstation20month9["PM25"], name=month[8],))
+    fig20.add_trace(go.Box(y=dfstation20month10["PM25"], name=month[9],))
+    fig20.add_trace(go.Box(y=dfstation20month11["PM25"], name=month[10],))
+    fig20.add_trace(go.Box(y=dfstation20month12["PM25"], name=month[11],))
+    fig20.update_layout(title_text="for station 20",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig21 = go.Figure()
+    fig21.add_trace(go.Box(y=dfstation21month1["PM25"], name=month[0],))
+    fig21.add_trace(go.Box(y=dfstation21month2["PM25"], name=month[1],))
+    fig21.add_trace(go.Box(y=dfstation21month3["PM25"], name=month[2],))
+    fig21.add_trace(go.Box(y=dfstation21month4["PM25"], name=month[3],))
+    fig21.add_trace(go.Box(y=dfstation21month5["PM25"], name=month[4],))
+    fig21.add_trace(go.Box(y=dfstation21month6["PM25"], name=month[5],))
+    fig21.add_trace(go.Box(y=dfstation21month7["PM25"], name=month[6],))
+    fig21.add_trace(go.Box(y=dfstation21month8["PM25"], name=month[7],))
+    fig21.add_trace(go.Box(y=dfstation21month9["PM25"], name=month[8],))
+    fig21.add_trace(go.Box(y=dfstation21month10["PM25"], name=month[9],))
+    fig21.add_trace(go.Box(y=dfstation21month11["PM25"], name=month[10],))
+    fig21.add_trace(go.Box(y=dfstation21month12["PM25"], name=month[11],))
+    fig21.update_layout(title_text="for station 21",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+    fig22 = go.Figure()
+    fig22.add_trace(go.Box(y=dfstation22month1["PM25"], name=month[0],))
+    fig22.add_trace(go.Box(y=dfstation22month2["PM25"], name=month[1],))
+    fig22.add_trace(go.Box(y=dfstation22month3["PM25"], name=month[2],))
+    fig22.add_trace(go.Box(y=dfstation22month4["PM25"], name=month[3],))
+    fig22.add_trace(go.Box(y=dfstation22month5["PM25"], name=month[4],))
+    fig22.add_trace(go.Box(y=dfstation22month6["PM25"], name=month[5],))
+    fig22.add_trace(go.Box(y=dfstation22month7["PM25"], name=month[6],))
+    fig22.add_trace(go.Box(y=dfstation22month8["PM25"], name=month[7],))
+    fig22.add_trace(go.Box(y=dfstation22month9["PM25"], name=month[8],))
+    fig22.add_trace(go.Box(y=dfstation22month10["PM25"], name=month[9],))
+    fig22.add_trace(go.Box(y=dfstation22month11["PM25"], name=month[10],))
+    fig22.add_trace(go.Box(y=dfstation22month12["PM25"], name=month[11],))
+    fig22.update_layout(title_text="for station 22",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+
+    fig23 = go.Figure()
+    fig23.add_trace(go.Box(y=dfstation23month1["PM25"], name=month[0],))
+    fig23.add_trace(go.Box(y=dfstation23month2["PM25"], name=month[1],))
+    fig23.add_trace(go.Box(y=dfstation23month3["PM25"], name=month[2],))
+    fig23.add_trace(go.Box(y=dfstation23month4["PM25"], name=month[3],))
+    fig23.add_trace(go.Box(y=dfstation23month5["PM25"], name=month[4],))
+    fig23.add_trace(go.Box(y=dfstation23month6["PM25"], name=month[5],))
+    fig23.add_trace(go.Box(y=dfstation23month7["PM25"], name=month[6],))
+    fig23.add_trace(go.Box(y=dfstation23month8["PM25"], name=month[7],))
+    fig23.add_trace(go.Box(y=dfstation23month9["PM25"], name=month[8],))
+    fig23.add_trace(go.Box(y=dfstation23month10["PM25"], name=month[9],))
+    fig23.add_trace(go.Box(y=dfstation23month11["PM25"], name=month[10],))
+    fig23.add_trace(go.Box(y=dfstation23month12["PM25"], name=month[11],))
+    fig23.update_layout(title_text="for station 23",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
+
+
+
+    app = dash.Dash()
+
+    fig_names = ['fig1', 'fig2', 'fig3', 'fig4', 'fig5', 'fig6', 'fig7', 'fig8', 'fig9', 'fig10', 'fig11', 'fig12', 'fig13', 'fig14', 'fig15'
+                , 'fig16', 'fig17', 'fig18', 'fig19', 'fig20', 'fig21', 'fig22', 'fig23']
+    fig_dropdown = html.Div([
+        dcc.Dropdown(
+            id='fig_dropdown',
+            options=[{'label': x, 'value': x} for x in fig_names],
+            value=None
+        )])
+    fig_plot = html.Div(id='fig_plot')
+    app.layout = html.Div([fig_dropdown, fig_plot])
+
+    @app.callback(
+    dash.dependencies.Output('fig_plot', 'children'),
+    [dash.dependencies.Input('fig_dropdown', 'value')])
+    def update_output(fig_name):
+        return name_to_figure(fig_name)
+
+    def name_to_figure(fig_name):
+        figure = go.Figure()
+        if fig_name == 'fig1':
+            figure=fig1
+        elif fig_name == 'fig2': 
+            figure=fig2
+        elif fig_name == 'fig3': 
+            figure=fig3
+        elif fig_name == 'fig4': 
+            figure=fig4
+        elif fig_name == 'fig5': 
+            figure=fig5
+        elif fig_name == 'fig6': 
+            figure=fig6
+        elif fig_name == 'fig7': 
+            figure=fig7
+        elif fig_name == 'fig8': 
+            figure=fig8
+        elif fig_name == 'fig9': 
+            figure=fig9
+        elif fig_name == 'fig10': 
+            figure=fig10
+        elif fig_name == 'fig11': 
+            figure=fig11
+        elif fig_name == 'fig12': 
+            figure=fig12
+        elif fig_name == 'fig13': 
+            figure=fig13
+        elif fig_name == 'fig14': 
+            figure=fig14
+        elif fig_name == 'fig15': 
+            figure=fig15
+        elif fig_name == 'fig16': 
+            figure=fig16
+        elif fig_name == 'fig17': 
+            figure=fig17
+        elif fig_name == 'fig18': 
+            figure=fig18
+        elif fig_name == 'fig19': 
+            figure=fig19
+        elif fig_name == 'fig20': 
+            figure=fig20
+        elif fig_name == 'fig21': 
+            figure=fig21
+        elif fig_name == 'fig22': 
+            figure=fig22
+        elif fig_name == 'fig23': 
+            figure=fig23
+        return dcc.Graph(figure=figure)
+
+    app.run_server(debug=True, use_reloader=False)
+
+    return render(request, "graphs/boxPlotTwo.html")#http://127.0.0.1:8050
 
 
 def boxPlotThree(request):
