@@ -2606,7 +2606,7 @@ def routeWise(request):
     df2['mean']=pd.to_numeric(df2['mean'],errors='coerce')
 
     df2[["latitude", "longitude"]]=df2[["latitude", "longitude"]].astype(float)
-    df2['location']=df2['location'].astype('|S')
+    df2['location']=df2['location'].astype(str)
 
     print(df2.info())
 
@@ -2617,7 +2617,7 @@ def routeWise(request):
         lat =df2['latitude'], 
         zoom=3,
         color=df2['mean'], 
-        labels=df2['location'],
+        labels=df2['location'],text=df2['location'],
         #hover_name=df2['location'],
 
 
