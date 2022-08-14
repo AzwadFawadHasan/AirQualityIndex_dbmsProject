@@ -43,18 +43,31 @@ def upload(request):
         
     return render(request, "csvs/fileupload.html")
 
-
+FOLDER_PATH = r'C:\\Users\\dellG15\\Documents\\CSE303_Database_Project\\airQuality\\media'
 def readfile(filename):
     my_file = pd.read_csv(filename, sep=',', engine='python')
     #my_file = pd.read_csv(filename, sep='[:;,_|#]', engine='python')
+    
     data = pd.DataFrame(data=my_file, index=None)
-    pth = "myfile"
-    print(list(map(path.basename,iglob(pth+"*.mkv"))))
-
-
-    print([path.basename(f) for f in  iglob(pth+"*.mkv")])
+    #pth = "myfile"
+    #print(list(map(path.basename,iglob(pth+"*.mkv"))))
+    #
+    #
+    #print([path.basename(f) for f in  iglob(pth+"*.mkv")])
 
     print(filename)
+    listdir(FOLDER_PATH)
     print(data);
 
 
+def listdir(dir):
+    fileNames = os.listdir(dir)
+    for fileName in fileNames:
+        print('File Name: '+ fileName)
+        if(fileName=="myfile.csv"):
+
+            print("I found your file")
+
+
+if __name__ == '__main__':
+    listdir(FOLDER_PATH)
