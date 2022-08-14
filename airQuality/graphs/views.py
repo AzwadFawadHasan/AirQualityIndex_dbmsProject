@@ -2581,4 +2581,49 @@ def boxPlotThree(request):
 
 def routeWise(request):
     #Season-Wise time based AQI data visualization using box plot
+    db_name = "air"
+    db_host = "localhost"
+    db_username = "root"
+    db_password = "root"
+
+    try:
+
+        conn=pymysql.connect(host =db_host,
+                            port = int(3306),
+                            user = db_username,
+                            passwd = db_password,
+                            db=db_name)
+    except e:
+
+
+        print(e)
+
+
+    #df = pd.read_sql_query("SELECT * FROM finaltraindata", conn)
+    df2 = pd.read_sql_query("SELECT * FROM epadaily", conn)
+
+    df2['daily'] = pd.to_datetime(df2['daily'])
+    df2['mean']=pd.to_numeric(df2['mean'],errors='coerce')
+
+    df2[["latitude", "longitude"]]=df2[["latitude", "longitude"]].astype(float)
+    df2['location']=df2['location'].astype('|S')
+
+    print(df2.info())
+
+
+
+    fig= px.scatter_mapbox(
+        df2, lon=df2['longitude'],
+        lat =df2['latitude'], 
+        zoom=3,
+        color=df2['mean'], 
+        labels=df2['location'],
+        #hover_name=df2['location'],
+
+
+
+        title="scatter map", 
+         )
+    fig.update_layout(mapbox_style="open-street-map")
+    fig.show()
     return render(request, "graphs/routeWise.html")

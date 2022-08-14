@@ -65,7 +65,7 @@ def listdir(dir):
     for fileName in fileNames:
         print('File Name: '+ fileName)
         if(fileName=="myfile.csv"):
-
+            #Add insert table insert command
             print("I found your file")
 
 
