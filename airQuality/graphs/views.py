@@ -2601,29 +2601,69 @@ def routeWise(request):
 
     #df = pd.read_sql_query("SELECT * FROM finaltraindata", conn)
     df2 = pd.read_sql_query("SELECT * FROM epadaily", conn)
+    df3 = pd.read_sql_query("SELECT * FROM purpleair", conn)
 
     df2['daily'] = pd.to_datetime(df2['daily'])
     df2['mean']=pd.to_numeric(df2['mean'],errors='coerce')
 
+    df3['daily'] = pd.to_datetime(df3['daily'])
+    df3['mean']=pd.to_numeric(df3['mean'],errors='coerce')
+
     df2[["latitude", "longitude"]]=df2[["latitude", "longitude"]].astype(float)
     df2['location']=df2['location'].astype(str)
 
-    print(df2.info())
+
+    df3[["latitude", "longitude"]]=df3[["latitude", "longitude"]].astype(float)
+    df3['location']=df3['location'].astype(str)
+
+    #print(df3.info())
+
+    #result = df2.append(df3)
+
+    #print(result)
 
 
-
-    fig= px.scatter_mapbox(
+    fig1= px.scatter_mapbox(
         df2, lon=df2['longitude'],
         lat =df2['latitude'], 
         zoom=3,
         color=df2['mean'], 
         labels=df2['location'],text=df2['location'],
+        #mode = "markers+text+lines",
+        #hover_name="location",
+        #colorbar_title="AVG PM25",
+        #text = df2['location'],
         #hover_name=df2['location'],
 
 
 
         title="scatter map", 
          )
+    fig1.update_layout(mapbox_style="open-street-map")
+    #fig1.show()
+
+    fig2= px.scatter_mapbox(
+        df3, lon=df3['longitude'],
+        lat =df3['latitude'], 
+        zoom=3,
+        color=df3['mean'], 
+        labels=df3['location'],text=df3['location'],
+        #mode = "markers+text+lines",
+        #hover_name="location",
+        #colorbar_title="AVG PM25",
+        #text = df2['location'],
+        #hover_name=df2['location'],
+
+
+    
+    title="scatter map", 
+     )
+    fig2.update_layout(mapbox_style="open-street-map")
+    fig = go.Figure(data = fig1.data + fig2.data )
     fig.update_layout(mapbox_style="open-street-map")
     fig.show()
+    #    fig.update_yaxes(autorange=True)
+    #    fig.update_xaxes(autorange=True)
+    #   fig.update_layout(autotypenumbers='convert types')
+    #
     return render(request, "graphs/routeWise.html")
