@@ -1,13 +1,23 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Login {% endblock %} 
+
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
 <html>
     <head>
         <title>Signup Page</title>
         <style>
+            
             body{
                 font-family: Arial, Helvetica, sans-serif;
-                background-color: white;
+                
             }
             button{
-                background-color: #e0ae1b;
+                background-color: #d854dc;
                 width: 25%;
                 padding: 15px;
                 color: black;
@@ -19,7 +29,7 @@
                 font-size: 20px;
             }
             form{
-                border: 3px solid #f1f1f1;
+                border: 3px ;
             }
             input[type=email],input[type=password]{
                 width: 50%;
@@ -36,7 +46,7 @@
             }
             .container{
                 padding: 50px;
-                background-color: white;
+                
             }
             .imgcontainer {
                 text-align: center;
@@ -56,15 +66,23 @@
             {% load static %}
             <center><div class="container">
                 <div class="imgcontainer">
-                    <img src="{% static 'avatar_img1.jpg' %}" alt="Avatar" class="avatar">
+                    <img src="{% static 'avatar_img5.jpg' %}" alt="Avatar" class="avatar">
                 </div>
                 <label for ='email'><b>UserEmail :  </b></label>
                 <input type="email" placeholder="Enter email" name="email" float="right"  required><br>  
                 <label for='password'><b>Password : </b></label>
                 <input type="password" placeholder="Enter Password" name="password" required><br>  
                 <button type="submit"><b>Login</b></button><br>     
-                Don't have accounct <a href="http://localhost:8000/signup/"> register </a>
+                Don't have account? <a href="http://localhost:8000/signup/"> register </a>
             </div></center>
         </form>
     </body>
 </html>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+
+
