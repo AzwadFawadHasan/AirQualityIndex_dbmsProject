@@ -1559,13 +1559,24 @@ def boxPlotOne(request):
     return render(request, "graphs/boxPlotOne.html")
 
 
+
+import pymysql
+import pandas as pd
+import plotly.graph_objects as go # or 
+import plotly.express as px
+
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import plotly.graph_objects as go # or plotly.express as px
+
+import pymysql
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+
+
 def boxPlotTwo(request):
-    #Station-Wise AQI data visualization using a box plot, e.g.
-    
-
-
-
-
     db_name = "air"
     db_host = "localhost"
     db_username = "root"
@@ -2155,8 +2166,84 @@ def boxPlotTwo(request):
 
 
 
+    fig2.update_layout(
+        title_text="for station 2",
+        showlegend=True,
+        xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types'
+    )
 
 
+
+    fig3 = go.Figure()
+    fig3.add_trace(go.Box(y=dfstation3month1["PM25"], name=month[0],
+                      ))
+
+    fig3.add_trace(go.Box(y=dfstation3month2["PM25"], name=month[1],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month3["PM25"], name=month[2],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month4["PM25"], name=month[3],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month5["PM25"], name=month[4],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month6["PM25"], name=month[5],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month7["PM25"], name=month[6],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month8["PM25"], name=month[7],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month9["PM25"], name=month[8],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month10["PM25"], name=month[9],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month11["PM25"], name=month[10],
+                        ))
+    fig3.add_trace(go.Box(y=dfstation3month12["PM25"], name=month[11],
+                        ))
+
+
+    fig3.update_layout(
+        title_text="for station 3",
+        showlegend=True,
+        xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types'
+    ) 
+
+ 
+    fig4 = go.Figure()
+    fig4.add_trace(go.Box(y=dfstation4month1["PM25"], name=month[0],
+                      ))
+
+
+    fig4.add_trace(go.Box(y=dfstation4month2["PM25"], name=month[1],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month3["PM25"], name=month[2],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month4["PM25"], name=month[3],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month5["PM25"], name=month[4],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month6["PM25"], name=month[5],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month7["PM25"], name=month[6],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month8["PM25"], name=month[7],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month9["PM25"], name=month[8],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month10["PM25"], name=month[9],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month11["PM25"], name=month[10],
+                        ))
+    fig4.add_trace(go.Box(y=dfstation4month12["PM25"], name=month[11],
+                        ))     
+
+
+
+    fig4.update_layout(
+        title_text="for station 4",
+        showlegend=True,
+        xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types'
+    )
     fig5 = go.Figure()
     fig5.add_trace(go.Box(y=dfstation5month1["PM25"], name=month[0],))
     fig5.add_trace(go.Box(y=dfstation5month2["PM25"], name=month[1],))
@@ -2448,8 +2535,9 @@ def boxPlotTwo(request):
     fig23.update_layout(title_text="for station 23",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
 
 
-
+    import dash;
     app = dash.Dash()
+    #app = dash.Dash(__name__)
 
     fig_names = ['fig1', 'fig2', 'fig3', 'fig4', 'fig5', 'fig6', 'fig7', 'fig8', 'fig9', 'fig10', 'fig11', 'fig12', 'fig13', 'fig14', 'fig15'
                 , 'fig16', 'fig17', 'fig18', 'fig19', 'fig20', 'fig21', 'fig22', 'fig23']
@@ -2462,6 +2550,7 @@ def boxPlotTwo(request):
     fig_plot = html.Div(id='fig_plot')
     app.layout = html.Div([fig_dropdown, fig_plot])
 
+    
     @app.callback(
     dash.dependencies.Output('fig_plot', 'children'),
     [dash.dependencies.Input('fig_dropdown', 'value')])
@@ -2517,10 +2606,19 @@ def boxPlotTwo(request):
         elif fig_name == 'fig23': 
             figure=fig23
         return dcc.Graph(figure=figure)
+    
+    
 
     app.run_server(debug=True, use_reloader=False)
+    #app.config.suppress_callback_exceptions = True
+    #if __name__ == '__main__':
+    #    app.run_server(debug=True)
+
+    
 
     return render(request, "graphs/boxPlotTwo.html")#http://127.0.0.1:8050
+
+
 
 
 def boxPlotThree(request):
