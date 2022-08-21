@@ -1575,8 +1575,26 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 
+from dash import html
+from dash.long_callback import DiskcacheLongCallbackManager
+from dash.dependencies import Input, Output
+
+import pandas as pd
+import dash
+import dash_html_components as html
+import dash_core_components as dcc
+from dash.dependencies import Input, Output, State
+from jupyter_dash import JupyterDash
+import plotly.graph_objects as go
+import plotly.express as px
+from dash import no_update
+import plotly.figure_factory as ff
+
 
 def boxPlotTwo(request):
+
+   
+
     db_name = "air"
     db_host = "localhost"
     db_username = "root"
@@ -2534,6 +2552,9 @@ def boxPlotTwo(request):
     fig23.add_trace(go.Box(y=dfstation23month12["PM25"], name=month[11],))
     fig23.update_layout(title_text="for station 23",showlegend=True,xaxis_title="month", yaxis_title="PM2.5", autotypenumbers='convert types')
 
+    from dash import html
+    from dash.long_callback import DiskcacheLongCallbackManager
+    from dash.dependencies import Input, Output
 
     import dash;
     app = dash.Dash()
@@ -2545,17 +2566,23 @@ def boxPlotTwo(request):
         dcc.Dropdown(
             id='fig_dropdown',
             options=[{'label': x, 'value': x} for x in fig_names],
-            value=None
+            value=None,
         )])
     fig_plot = html.Div(id='fig_plot')
     app.layout = html.Div([fig_dropdown, fig_plot])
 
-    
+    import diskcache
+    cache = diskcache.Cache("./cache")
+    long_callback_manager = DiskcacheLongCallbackManager(cache)
     @app.callback(
+
     dash.dependencies.Output('fig_plot', 'children'),
-    [dash.dependencies.Input('fig_dropdown', 'value')])
-    def update_output(fig_name):
-        return name_to_figure(fig_name)
+    [dash.dependencies.Input('fig_dropdown', 'value')],background=True,
+    manager=long_callback_manager,
+    
+    )
+
+    
 
     def name_to_figure(fig_name):
         figure = go.Figure()
@@ -2607,10 +2634,11 @@ def boxPlotTwo(request):
             figure=fig23
         return dcc.Graph(figure=figure)
     
-    
+    def update_output(fig_name):
+        return name_to_figure(fig_name)
 
     app.run_server(debug=True, use_reloader=False)
-    #app.config.suppress_callback_exceptions = True
+    app.config.suppress_callback_exceptions: True
     #if __name__ == '__main__':
     #    app.run_server(debug=True)
 
@@ -2659,7 +2687,9 @@ def boxPlotThree(request):
 
     @app.callback(
         Output('graph', 'figure'),
-        [Input(component_id='dropdown', component_property='value')]
+        [Input(component_id='dropdown', component_property='value')],
+        background=True,
+        
     )
     def select_graph(value):
         if value == 'graph1':
