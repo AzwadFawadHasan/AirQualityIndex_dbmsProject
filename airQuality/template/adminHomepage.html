@@ -12,6 +12,9 @@
 
     <div>
         <h1><strong><b><i>Wanna Check Graphs?</i></b></strong></h1>
+        <div>
+            
+        </div>
          <br>
          <a href="{% url 'lineCharts' %}" target="_blank"> lineCharts</a>
          <br>
@@ -55,6 +58,8 @@
         
          
     </div>
+
+    
 </body>
 
 
@@ -110,7 +115,15 @@
           </div>
           <div class="card-body">
             <div class="chart-area">
-              <canvas id="chartBig1"></canvas>
+              {% autoescape off %}
+                {{ plot_div }}
+                {% endautoescape %}
+              <canvas id="chartBig1"> {% autoescape off %}
+                {{ plot_div }}
+                {% endautoescape %}
+
+
+              </canvas>
             </div>
           </div>
         </div>

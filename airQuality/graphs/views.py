@@ -90,13 +90,16 @@ import dash_html_components as html
 
 
 
+import plotly.io as pio
 
 
 
 
 
 def lineCharts(request):
-
+    
+    
+    pio.renderers.default = 'browser'
     #connecting database
     mydb = mysql.connector.connect(
     host="localhost",
@@ -1106,7 +1109,7 @@ def lineChartsWithDots(request):
 
     BarisalDf=pd.DataFrame(dict1);
 
-    
+    colors = {'background':'#242c3c', 'text':'#e04ccc'}
     #display(df)
     fig = go.Figure()
     #fig2 = go.Figure()
@@ -1120,13 +1123,22 @@ def lineChartsWithDots(request):
     fig.add_trace(go.Scatter(x=MymensinghDf["YEAR"], y=MymensinghDf["AvgPM25"], name='Mymensingh',mode='lines'))
     fig.add_trace(go.Scatter(x=BarisalDf["YEAR"], y=BarisalDf["AvgPM25"], name='Barisal',mode='lines'))
     
-
-    fig.update_layout(
-    title="avgpm25 vs time", xaxis_title="Time", yaxis_title="AVG PM 25"
-    )
-   
+    import plotly.io as pio
+    pio.templates
+    pio.templates.default = "plotly_dark"
     
-    fig.show()
+    fig.update_layout(
+    title="avgpm25 vs time", xaxis_title="Time", yaxis_title="AVG PM 25",
+    
+     
+                              
+    )
+
+    
+
+    
+    
+    
     
     return render(request, "graphs/lineChartsWithDots.html")
    
