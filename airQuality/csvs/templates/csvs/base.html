@@ -8,21 +8,79 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <!--Custom css ADD HERE-->
+    <style>
+      .button {
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #f4511e;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        font-size: 28px;
+        padding: 20px;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+      }
+      
+      .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+      }
+      
+      .button span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+      }
+      
+      .button:hover span {
+        padding-right: 25px;
+      }
+      
+      .button:hover span:after {
+        opacity: 1;
+        right: 0;
+      }
+      </style>
     
     <!-- semantic UI -->
     <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-
+    
   
     <title>bffbook - {% block title %}{% endblock title %}</title>
-  </head>
+    
+    
+  </head> 
+
+<!-- HTML !-->
+
+
+
+
+
+<!-- HTML !-->
+
+
+
+
   <body>
     <div class="ui container">
       {% block content %}
+      
+        
+      </div>
         <form action="" method = "POST" class = "ui form" enctype = "multipart/form-data">
             {% csrf_token %}
             {{form}}
-            <button type = "submit" class = "u ibutton primary"></button>
+            <button type = "submit" class = "button"  style="vertical-align:middle"><span></span></button>
 
             confirm
         </form>        
