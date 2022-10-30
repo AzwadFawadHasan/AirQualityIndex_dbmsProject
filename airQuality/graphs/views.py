@@ -1123,9 +1123,7 @@ def lineChartsWithDots(request):
     fig.add_trace(go.Scatter(x=MymensinghDf["YEAR"], y=MymensinghDf["AvgPM25"], name='Mymensingh',mode='lines'))
     fig.add_trace(go.Scatter(x=BarisalDf["YEAR"], y=BarisalDf["AvgPM25"], name='Barisal',mode='lines'))
     
-    import plotly.io as pio
-    pio.templates
-    pio.templates.default = "plotly_dark"
+    
     
     fig.update_layout(
     title="avgpm25 vs time", xaxis_title="Time", yaxis_title="AVG PM 25",
@@ -1134,7 +1132,7 @@ def lineChartsWithDots(request):
                               
     )
 
-    
+    fig.show()
 
     
     
